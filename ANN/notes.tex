@@ -44,12 +44,13 @@ We want some desired function, $d = g(x)$.
 
 Perceptron is a supervised algorithm.  Given inputs $D = \{(x_j, d_j)\}$, want classifier $f$.
 
-We'll call $x_{j,i}$ the value of feature $i$ in training datum $j$.  We set $x_{j,0}\equiv 1$.
+We'll call $x_{j,i}$ the value of feature $i$ in training datum $j$.
+We set $x_{j,0}\equiv 1$.  This way we don't have to think about bias.
 
-Perceptron algorithm:
+\textbf{Perceptron algorithm:}
 \begin{displaymath}
   \mbox{At each output, }
-  f(x, w) = \left\{
+  f(x; w, b) = \left\{
     \begin{array}{ll}
       1 & \mbox{if } w\cdot x + b > 0 \\
       0 & \mbox{otherwise}
@@ -59,15 +60,90 @@ Perceptron algorithm:
 \begin{itemize}
 \item Initialise weights randomly.
 \item $\forall x_j\in \mbox{inputs}$, compute output: $y_j(t) = f(w(t)\cdot x_j)$
-\item $w_i(t+1) = w_i(t) + r\cdot (d_j - y_j(t)) x_{j,i}$ for all features $i$
+\item Update weights
 \end{itemize}
+
+A bit more detail on weight update:
+
+\fbox{v1}
+\begin{displaymath}
+w(t+1) = \left\{
+\begin{array}{ll}
+  w(t) - r(t) & \mbox{ if false positive} \\
+  w(t) & \mbox{ if no error} \\
+  w(t) + r(t) & \mbox{ if fail to recognise} \\
+\end{array} \right.
+\end{displaymath}
+
+\fbox{v2} ($d=$ desired, $y=$ observed) :
+\begin{displaymath}
+  d(t) - y(t) = \left\{
+\begin{array}{ll}
+  -1 & \mbox{ if  false positive} \\
+  0 & \mbox{ if no error} \\
+  1 & \mbox{ if fail to recognise} \\
+\end{array} \right.
+\end{displaymath}
+
+\fbox{v3} $w_i(t+1) = w_i(t) + r(t)\cdot (d_j - y_j(t)) x_{j,i}$ for all features $i$
 
 The weight are updated at the last step after each training sample.
 
 Converges if separable.
 
-\fbox{Talk about convergence, about Seymor and Pappert.}
+A perceptron with two inputs looks like this:
+\begin{displaymath}
+  w_1 x_1 + w_2 x_2 = T
+\end{displaymath}
+(where $T$ is a threshold).  So this is a line.
 
+Show linear separability of logical operations except xor.
+
+For xor:
+\begin{displaymath}
+  \left\{
+  \begin{array}{ll}
+    w_1 x_1 + w_2 x_2 & = w_1 0 + w_2 0 < T \\
+    w_1 x_1 + w_2 x_2 & = w_1 0 + w_2 1 \ge T \\
+    w_1 x_1 + w_2 x_2 & = w_1 1 + w_2 0 \ge T \\
+    w_1 x_1 + w_2 x_2 & = w_1 1 + w_2 1 < T \\
+  \end{array} \right.
+\end{displaymath}
+
+So
+\begin{displaymath}
+  \left\{
+  \begin{array}{ll}
+     w_2 1 & \ge T \\
+     w_1 1 & \ge T \\
+     w_1 + w_2 & < T \\
+  \end{array} \right.
+\end{displaymath}
+which is a contradiction.
+
+\bigskip
+We also call the separating plane (hyperplane) a decision boundary. \\
+The function we also call a discriminant or decision function.\\
+At the boundary, the decision function is zero.
+
+Recall geometry: decision boundary is perpendicular to weight vector.
+
+\begin{proof}
+  Consider $x_1$ and $x_2$ on the decision boundary.  Then
+  $f(x_1; w, b) = 0$ and $f(x_2; w, b) = 0$.  So
+  $w\cdot (x_1 - x_2) = 0$.
+\end{proof}
+
+
+\exercise{Compute the weights for a perceptron that computes logical
+  AND.  If it doesn't feel easy, compute logical OR as well.}
+
+\exercise{In python, implement (from scratch) a perceptron algorithm
+  with (at least) two inputs.  It should accept as input a matrix of
+  training data (numpy \texttt{ndarray} is your friend) and an array
+  of supervision classes.  Push to your own git repo for the course.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Perceptron and MNIST}
 
 What other classifiers do we know?
@@ -79,6 +155,8 @@ What other classifiers do we know?
 Talk about OvO, OvA.
 
 This just introduces voting\dots
+
+Discuss: Why is it important that weights are non-binary here?
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -235,6 +313,8 @@ In other words,
 \item Quadratic in width
 \end{itemize}
 
+\exercise{Compute all of the partial derivatives in the $2\times 2$
+  network above, assuming the interconnections we've shown.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Deep networks}
