@@ -1,0 +1,490 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+\usepackage{bbm}
+
+\begin{document}
+
+
+
+
+\notetitle{Support Vector Machines}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Lagrange Multipliers}
+
+We've talked about optimisation, but life often supplies constraints.
+
+Example: Maximise production but there's a budget
+
+Example: Maximise fun but there's a budget
+
+Example: Live as long as you can on Mars but you have minimum daily
+calorie requirements to survive
+
+\bigskip
+
+Suppose we have a function $f : \mathbbm{R}^n \rightarrow
+\mathbbm{R}$ that we want to maximise.
+
+Then look at $\{x\mid \nabla f(x) = 0 \}$.
+
+\medskip
+
+Suppose moreover that we have another function $g : \mathbbm{R}^n
+\rightarrow \mathbbm{R}$ and that we have some constraint like
+$g(x)=0$.
+
+So
+\begin{displaymath}
+  \mbox{Maximize } f(x,y) \mbox{ subject to } g(x,y) = 0
+\end{displaymath}
+
+\textbf{Example:}
+
+\begin{equation}
+\begin{cases}
+  f(x,y) & = xy \\
+  g(x,y) & = x^2 + y^2 = 1
+\end{cases}
+\end{equation}
+
+How do we approach this?
+
+Consider isoclines $f(x,y) = c$.
+
+And consider isoclines $g(x,y) = c'$ (not necessarily the same
+constant).
+
+We want tangent points.
+
+Recall that gradient is $\bot$ to isoclines.\\
+So we want the points where the $\nabla$ are $\parallel$.
+
+So we want set of
+\begin{displaymath}
+  \{ x \mid \nabla f(x) = \lambda \nabla g(x) \}
+\end{displaymath}
+
+\textbf{Example:}
+
+\begin{equation}
+  \begin{cases}
+    \nabla f & = 
+    \begin{pmatrix}
+      y \\ x
+    \end{pmatrix}
+    \\[8mm]
+    \nabla g & =
+    \begin{pmatrix}
+      2x \\ 2y
+    \end{pmatrix}
+  \end{cases}
+\end{equation}
+
+So
+\begin{equation}
+  \begin{cases}
+    y & = \lambda 2x
+    \\
+    x & = \lambda 2y
+    \\
+    1 & = x^2 + y^2
+  \end{cases}
+\end{equation}
+
+From the first of these we get
+\begin{displaymath}
+  \lambda = \frac{y}{2x} \quad \mbox{ if } x \neq 0
+\end{displaymath}
+
+Substituting into the second,
+\begin{displaymath}
+  x = \frac{y}{2x} \cdot 2y = \frac{y^2}{x} \Rightarrow x^2 = y^2
+  \Rightarrow x = \pm y
+\end{displaymath}
+
+And then the third provides
+\begin{displaymath}
+  2x^2 = 1 \Rightarrow x^2 = \frac 12 \Rightarrow \boxed{x =
+  \frac{\pm\sqrt{2}}{2} \wedge y = -x}
+\end{displaymath}
+
+\exercise{Consider $f(x,y) = x y^2$ subject to $2x^2 + 5y^2 = 2$.}
+
+\exercise{Consider $f(x,y,z) = x^2 y^3 z$ subject to $2x^2 + 5y^2 = 2$.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Lagrangian}
+
+We can write
+\begin{displaymath}
+  L = f - \lambda g
+\end{displaymath}
+
+Then $\nabla L = 0$ is the set of equations we started with, above.
+
+This is generally a nice form for computers.
+
+It also transforms the problem from a constrained optimisation
+problem into an unconstrained optimisation problem.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Decision boundaries}
+
+Consider these points.  What would be the decision boundaries for
+\begin{itemize}
+\item logistic regression
+\item CART
+\item ANN
+\end{itemize}
+
+\centerline{\input{decision.pdf_t}}
+
+\bigskip
+
+Consider a sort of ``ideal'' decision boundary.  Stay linear, but
+which line?
+
+Concept of widest street (or: bicycle lane).
+
+How do we make a decision boundary that will use that line?
+
+\bigskip
+\centerline{\input{decision-svm1.pdf_t}}
+\bigskip
+
+Consider a vector $w$ that is $\bot$ to the separator that we want.
+(We don't know its length.)
+
+Let $u$ be a vector pointing to some unknown point that we want to
+classify.
+
+Is $u$ on the $+$ or the $-$ side of the decision boundary (zone, margin)?
+
+Let's project $u$ onto $w$.  Then we want
+\begin{displaymath}
+  w\cdot u \ge c
+\end{displaymath}
+
+which is the same as saying this, which we'll call our decision rule:
+\begin{equation}
+  \label{eq:decision-rule}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{equation}
+
+But we don't know $b$ or $w$.
+
+We want to add contraints so that we can calculate them.
+
+Pick positive sample point $x_+$, negative sample point $x_-$.
+
+Want
+\begin{align*}
+  w\cdot x_+ + b & \ge 1
+  \\
+  w\cdot x_- + b & \le -1
+\end{align*}
+Note that the $\pm 1$ indicates the margin.  Zero is the decision
+boundary (the middle line).
+
+For convenience, introduce
+\begin{equation*}
+  y_i =
+  \begin{cases}
+    1 & \mbox{positive samples} \\
+    -1 & \mbox{negative samples}
+  \end{cases}
+\end{equation*}
+
+Multiplying by $y_i$, we get
+\begin{align*}
+  y_i(w\cdot x_+ + b) & \ge 1
+  \\
+  y_i(w\cdot x_- + b) & \ge 1
+\end{align*}
+
+These are the same!
+\begin{displaymath}
+  y_i(w\cdot x_i + b) - 1 \ge 0
+\end{displaymath}
+
+So for $x_i$ on the margin, we have
+\begin{equation}
+  \label{eq:on-margin}
+  \boxed{y_i(w\cdot x_i + b) - 1 = 0}
+\end{equation}
+
+We want to maximise the margin.  But what is its width?
+
+If we have a unit vector, we could set the width.  But we can subtract $x_+-x_-$:
+\begin{equation}
+  \label{eq:width-raw}
+  \mbox{width} = (x_+ - x_-) \cdot \frac{w}{\parallel w\parallel}
+\end{equation}
+
+But we have
+\begin{displaymath}
+  1(w\cdot x_+ + b) - 1 = 0 \iff w\cdot x_+ = 1-b
+\end{displaymath}
+and
+\begin{displaymath}
+  -1(w\cdot x_- + b) - 1 = 0 \iff -w\cdot x_- = 1+b
+\end{displaymath}
+
+So combining with eq. (\ref{eq:width-raw}), we get
+\begin{equation}
+  \label{eq:width}
+  \mbox{width} = \frac{2}{\parallel w\parallel}
+\end{equation}
+
+We want to maximise (\ref{eq:width}).
+
+So we can maximise $\frac{1}{\parallel w\parallel}$ $\Rightarrow$
+minimise $\parallel w\parallel$ $\Rightarrow$
+minimize $\;\frac 12 \parallel w\parallel^2$.
+
+\bigskip
+
+Let's use the Lagrangian!
+
+\begin{equation}
+  \label{eq:lagrangian}
+  L = \frac 12 \parallel w\parallel^2 - \sum \lambda_i \left[ y_i(w\cdot
+    x_i + b) - 1 \right]
+\end{equation}
+
+(It will turn out that $\lambda$ is non-zero only on the margin.)
+
+\begin{displaymath}
+  \frac{\partial L}{\partial w} = w - \sum\lambda y_i x_i = 0
+\end{displaymath}
+and so
+\begin{equation}
+  \label{eq:w}
+  w = \sum\lambda_i y_i x_i
+\end{equation}
+
+So $w$ is a linear combination of the samples!
+
+In addition,
+\begin{displaymath}
+  \frac{\partial L}{\partial b} = -\sum \lambda_i y_i = 0
+\end{displaymath}
+and so
+\begin{equation}
+  \label{eq:b}
+  \sum \lambda_i y_i = 0
+\end{equation}
+
+So what happens to $L$ (eq. \ref{eq:lagrangian})?
+
+\bigskip
+
+\begin{equation}
+  \label{eq:learning-rule}
+  L = \frac 12 \left( \sum \lambda_i y_i x_i\right)
+  \left(\sum \lambda_j y_j x_j\right)
+  -
+  \sum \lambda_i y_i x_i
+  \left(\sum \lambda_j y_j x_j\right)
+  - \boxed{\sum \lambda_i y_i} b + \sum \lambda_i
+\end{equation}
+The boxed portion is zero, so this leaves us with
+\begin{equation}
+  \label{eq:recognition-rule}
+  \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+  x_i\cdot x_j
+\end{equation}
+
+This is the optimisation: the part where we learn.
+
+So the optimisation depends on on the dot products of pairs of
+samples!
+
+\bigskip
+
+Let's go back to our decision rule, eq. (\ref{eq:decision-rule}).
+
+\begin{displaymath}
+  \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+\end{displaymath}
+Thi is the the decision boundary: it only depends on the sample vector
+and unknown!
+
+It can be shown that this is a convex space, so we can't get stuck at
+local maxima.
+
+We've seen that we can learn and decide using only dot products among
+sample data points and between sample data points and unknown (to be
+classified) points.  This is the property that lets us use kernels.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Soft Margin}
+
+First let's review SVM.  \blue{In blue I note the more important
+  changes needed for soft margins.}
+
+\blue{The idea is that we still want to maximise the margin, but we
+  want to permit some errors.  And we want to penalise errors based on
+  how bad they are.  And, ideally, not have too many of them.}
+
+\blue{Let's add slack variables $\boxed{\zeta_i \ge 0}\,$.  Let's set
+  $\zeta_i$ to zero for correctly classified points and equal to the
+  distance of misclassification otherwise.  This is called a
+  \textit{hinge function}.  This corresponds to moving the
+  misclassified points to the right side.}
+
+\blue{$C$ is a regularisation term.  We call it the \textit{slack
+    penalty} or \textit{hardness}.}
+
+We had a decision rule
+\begin{displaymath}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{displaymath}
+
+We introduced points $x_+$ and $x_-$ such that
+\begin{align*}
+  w\cdot x_+ + b & \ge 1
+  \\
+  w\cdot x_- + b & \le -1
+\end{align*}
+
+For convenience, we introduced
+\begin{equation*}
+  y_i =
+  \begin{cases}
+    1 & \mbox{positive samples} \\
+    -1 & \mbox{negative samples}
+  \end{cases}
+\end{equation*}
+
+Multiplying by $y_i$, we learned that
+\begin{displaymath}
+  y_i(w\cdot x_i + b) - 1 \blue{+ \zeta} \ge 0
+\end{displaymath}
+
+So for $x_i$ on the margin, we had
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) - 1 = 0}
+\end{displaymath}
+which is the same as
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) = 1}
+\end{displaymath}
+and off the margin we have
+\begin{displaymath}
+  \blue{\boxed{y_i(w\cdot x_i + b) \ge 1-\zeta}}
+\end{displaymath}
+
+We want to maximise the margin, and we learned that this meant we
+should look at minimising
+\begin{displaymath}
+  \frac 12 w\cdot w \blue{+ C\sum_i \zeta_i}
+  = \frac 12 \parallel w \parallel^2 \blue{+ C\sum_i \zeta_i}
+\end{displaymath}
+
+The left part is trying to maximise the margin, the right part is the
+\textit{empirical loss} (how well we fit the training data).
+
+\blue{Note that as $C\rightarrow\infty$ we get the old hard margin
+  classifier. If $C=0$, then $\zeta_i$ can be anything, so we ignore
+  the data.}
+
+Then we used the Lagrangian to find an objective function
+\begin{displaymath}
+  \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+  x_i\cdot x_j
+\end{displaymath}
+and a recognition function
+\begin{displaymath}
+    \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+\end{displaymath}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Kernels}
+
+But what if our data is not linearly separable?  (Example: XOR.)
+
+The optimisation only depends on dot products, so what if we had a
+function $\phi$ that mapped our problem into a higher dimensional
+space where it is linearly separable?
+
+The learning rule (\ref{eq:learning-rule}) only depends on dot
+products.  So we can map using $\phi$ and optimise in the new space.
+
+In addition, the recognition rule (\ref{eq:recognition-rule}) also
+only depends on dot product.  So we can recognise in the new space,
+too.
+
+In addition, we just need to define a function
+\begin{displaymath}
+  k(x_i, x_j) = \phi(x_i)\cdot\phi(y_i)
+\end{displaymath}
+and we don't actually need to know $\phi$.  (We need this to satisfy
+some technical conditions.  Cf. Mercer's condition.)
+
+We have something like
+\begin{displaymath}
+  \phi : \R^d -> \R^D
+\end{displaymath}
+fand we could have $D$ very large, even infinite.  So $K$ is a good
+efficiency gain!
+
+You've already seen kernels (ridge regression, aka Tikhonov
+regularisation).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vbox{
+\notetitle{Popular Kernels}
+
+Linear kernel:
+$(u\cdot v + 1)$
+
+Polynomial kernel:
+$(u\cdot v + 1)^n$
+
+Radial basis function (RBK, RBF):
+\begin{displaymath}
+  e^{(-\parallel x_i - x_j\parallel) / \sigma}
+\end{displaymath}
+(Note: If $\sigma$ is too small, we overfit.)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{History}
+
+Vapnick did his PhD on this at Moscow University in the early 1960's.
+He worked at an oncology institute.  He didn't have access to
+computers, so this was mostly of theoretical interest.  No one in the
+West knew about his work.
+
+Someone at Bell Labs discovered him, invited him to visit.  He decided
+to emigrate to the U.S. in 1991.
+
+In 1992 he submitted three papers to NIPS.  All are rejected.
+
+In 1993--1994, Bell Labs becomes interested in OCR and ANNs.  Vapnick
+thinks ANNs suck, bets a colleague a good dinner that SVM will do a
+better job than an ANN.
+
+Colleague tries linear kernel with n=2, and it works.  This was the
+first use of kernels.  (It was in Vapnick's PhD thesis, but he didn't
+think it was very important.)
+
+So it took 30 years from his PhD (understanding the problem) to
+appreciating the importance of the technique.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{}
+
+
+\end{document}
