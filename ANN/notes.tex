@@ -1,0 +1,257 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+
+\begin{document}
+
+\notetitle{Neural Networks}
+
+ANN
+\begin{itemize}
+\item Long a curiosity
+\item 2012 paper, Hinton, image classification, 1000 categories, 60 million parameters
+\item neurones : axone, terminaison de l'axone, noyau, dendrites
+\end{itemize}
+
+\input{neuron.pdf_t}
+
+\bigskip
+
+What are we modeling?
+\begin{enumerate}
+\item all or none
+\item cumulative influence
+\item synaptic weight
+\item (not) refractory period \textit{(période réfractaire)}
+\item (not) axonal bifurcation
+\item (not) time patterns
+\end{enumerate}
+
+So we have a model of a neuron (a collection of weights and thresholds).\\
+But what about collections of neurons?
+
+\begin{displaymath}
+  \mbox{inputs} \rightarrow (w, t) \rightarrow \mbox{outputs}
+\end{displaymath}
+
+So we want $z = f(x, w, t)$.  Training means adjusting $w, t$.\\
+An ANN is a function approximator.
+
+We want some desired function, $d = g(x)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Too simple example: perceptron}
+
+Perceptron is a supervised algorithm.  Given inputs $D = \{(x_j, d_j)\}$, want classifier $f$.
+
+We'll call $x_{j,i}$ the value of feature $i$ in training datum $j$.  We set $x_{j,0}\equiv 1$.
+
+Perceptron algorithm:
+\begin{displaymath}
+  \mbox{At each output, }
+  f(x, w) = \left\{
+    \begin{array}{ll}
+      1 & \mbox{if } w\cdot x + b > 0 \\
+      0 & \mbox{otherwise}
+    \end{array}
+ \right.
+\end{displaymath}
+\begin{itemize}
+\item Initialise weights randomly.
+\item $\forall x_j\in \mbox{inputs}$, compute output: $y_j(t) = f(w(t)\cdot x_j)$
+\item $w_i(t+1) = w_i(t) + r\cdot (d_j - y_j(t)) x_{j,i}$ for all features $i$
+\end{itemize}
+
+The weight are updated at the last step after each training sample.
+
+Converges if separable.
+
+\fbox{Talk about convergence, about Seymor and Pappert.}
+
+\notetitle{Perceptron and MNIST}
+
+What other classifiers do we know?
+\begin{itemize}
+\item How would we do this with logistic regression?
+\item How would we do this with CARTs ?
+\end{itemize}
+
+Talk about OvO, OvA.
+
+This just introduces voting\dots
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\notetitle{Training a single neuron}
+
+Let's start with a performance function $P=\| d-z \|$.  \\
+Why don't we like that?
+
+So instead use $P=\| d-z \|^2 = (d-z)^2$.
+
+\textit{(Draw $w_1$-$w_2$ plot with isoclines.  Show four candidate
+  steps.  Mention 60 million parameters in Hinton's model.  Talk about
+  exponential explosion with number of weights.)}
+
+So we can follow the gradient:
+\begin{displaymath}
+  \frac{\partial P}{w_1} \quad , \quad   \frac{\partial P}{w_2}
+\end{displaymath}
+
+\begin{displaymath}
+  \Delta w = r\left( \frac{\partial P}{w_1} \mathbf{i} +
+    \frac{\partial P}{w_2} \mathbf{j} \right)
+\end{displaymath}
+
+What goes wrong?\\
+
+\textit{Computer scientists were stuck on this for a quarter century.
+Then Paul Werbos showed in his 1974 PhD dissertation how to train
+neural networks using back-propagation of errors.}
+
+\textbf{Two problems:}
+
+\textbf{\large 1. } Thresholds are annoying.  We don't want $z = f(x, w, T)$
+but $z=f(x, w)$.
+
+So let's add an extra weight $w_0$ and input $x_0=-1$.  Then set $w_0\equiv T$.
+
+\textit{(Show that this moves the threshold step to 0.  So we don't
+  have to pay attention to it anymore.)}
+
+\textbf{\large 2. } We're using a step function, which isn't continuous.
+
+Let's smooth it out.  Use sigmoid function.
+\begin{displaymath}
+  \beta = \frac{1}{1+e^{-\alpha}}
+\end{displaymath}
+
+\textit{(Walk through how to graph this.)}
+
+\textbf{Summary: } What have we done ?
+\begin{itemize}
+\item Built a neuron
+\item Described how to do gradient descent
+\item Modified our activation function to be compatible with gradient descent
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Training two neurons}
+
+\begin{itemize}
+\item 1 neuron isn't a net
+\item 2 neurons is a  net
+\end{itemize}
+
+\textbf{This is a simplest possible neural network.}
+
+\input{neuron2.pdf_t}
+
+\begin{displaymath}
+  \mbox{Then performance function is } \quad  P = \frac{1}{2} (d-z)^2
+\end{displaymath}
+
+So we want to do gradient descent, this means computing partial derivatives.
+
+\begin{displaymath}
+  \frac{\partial P}{\partial w_2}
+  =
+  \frac{\partial P}{\partial z}
+  \frac{\partial z}{\partial w_2}
+  =
+  \frac{\partial P}{\partial z}
+  \frac{\partial z}{\partial P_2}
+  \frac{\partial P_2}{\partial w_2}
+\end{displaymath}
+
+\begin{displaymath}
+  \frac{\partial P}{\partial w_1}
+  =
+  \frac{\partial P}{\partial z}
+  \frac{\partial z}{\partial P_2}
+  \frac{\partial P_2}{\partial y}
+  \frac{\partial y}{\partial P_1}
+  \frac{\partial P_1}{\partial w_1}
+\end{displaymath}
+
+How do we compute these things?
+
+\begin{displaymath}
+  \frac{\partial P_2}{\partial w_2} = y
+\end{displaymath}
+
+\begin{displaymath}
+  \frac{\partial z}{\partial P_2} = z(1-z) \quad \mbox{(come back to this)}
+\end{displaymath}
+
+\begin{displaymath}
+  \frac{\partial P}{\partial z} = d-z
+\end{displaymath}
+
+How do we compute the derivative of the sigmoid function?
+
+
+\begin{align*}
+  \frac{\partial\beta}{\partial\alpha}
+  %
+  & = \frac{\partial}{\partial\alpha} \left( \frac{1}{1+e^{-\alpha}} \right) \\[3mm]
+  %
+  & = \frac{\partial}{\partial\alpha} \left(1+e^{-\alpha}\right)^{-1} \\[3mm]
+  %
+  & = -\left(1+e^{-\alpha}\right)^{-2} e^{-\alpha} (-1) \\[3mm]
+  %
+  & = \frac{e^{-\alpha}}{1+e^{-\alpha}} \cdot \frac{1}{1+e^{-\alpha}} \\[3mm]
+  %
+  & = \frac{\mathbf{1+} e^{-\alpha} \mathbf{-1}}{1+e^{-\alpha}} \cdot \frac{1}{1+e^{-\alpha}} \\[3mm]
+  %
+  & = \left(\frac{1+e^{-\alpha}}{1+e^{-\alpha}} - \frac{1}{1+e^{-\alpha}}\right)
+    \cdot \frac{1}{1+e^{-\alpha}} \\[3mm]
+  %
+  & = (1-\beta)\beta
+\end{align*}
+
+This is pretty cool: the derivative of the sigmoid function is independent of the input!
+
+Note : at each phase, we only need to compute the last three factors.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Towards real life\dots}
+
+In real life, we have more than one of these going on at once.  Sort of like this:
+
+\input{neuron2x2.pdf_t}
+
+And then there are cross-overs with more weights, more multipliers.
+So we are again at risk of exponential blow-up: there are an
+exponential number of paths through the network.
+
+But note that the dependencies are only by column, so lots of things
+are already computed.
+
+In other words,
+\begin{itemize}
+\item Linear in depth
+\item Quadratic in width
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Deep networks}
+
+We want to go from 2 parameters to millions.
+
+\begin{itemize}
+\item convolution
+\item pooling --- max pooling
+\item kernel \textit{(taking some neurons and running them across the image)}
+\item multiple kernels
+\item softmax
+\item dropout
+\end{itemize}
+
+We don't really know why any of this works.
+
+Talk about auto-encoders.
+
+\end{document}
