@@ -17,8 +17,13 @@ Nous allons prendre comme hypothèse au moins les suppositions suivante
 
 * Vous savez programmer.  Vous connaissez déjà au moins les bases de python
   (par exemple, de l'année dernière).
+* Vous connaissez des moteurs de recherche, Stack Overflow, etc.
 * Vous êtes suffisamment compétent en anglais pour lire des textes
   simples (surtout, tutoriels) en anglais.
+
+Lors des cours magistraux, vous n'aurez pas besoin de votre
+ordinateur.  D'ailleurs, il est fortement recommandé d'avoir du papier
+et de pouvoir écrire.
 
 # Github
 
@@ -32,7 +37,7 @@ Pour toute question en remote, les règles de bons sens suivants s'appliquent :
 * C'est une question.  "Je ne comprends pas", par exemple, est un bon contre-exemple d'une question.
 * Vous expliquez ce que vous avez compris, ce que vous avez essayé.
 * Vous expliquez avec qui dans le cours vous avez consulté / collaboré afin d'essayer de comprendre.  Vous les taguez également.
-* Sachez que le debugging est difficile pour tout le monde.  Si un point de debugging me paraît facile, je vous montrerez ce que je vois.  Mais souvent il faut passer du temps, qu'on soit débutant ou confirmé, afin de trouver un bug.
+* Sachez que le debugging est difficile pour tout le monde.  Si un point de debugging me paraît facile, je vous montrerez ce que je vois.  Mais souvent il faut passer du temps, qu'on soit débutant ou confirmé, afin de trouver un bug.  C'est d'ailleurs comment on apprend.
 
 Les question en cours, bien évidemment, ne sont pas assujetties à cette déontologie sévère.  Vous êtes en cours pour l'interaction et vous devez poser vos questions réfléchies au fur et à mesure !
 
