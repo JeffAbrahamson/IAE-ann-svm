@@ -1,10 +1,12 @@
 # Big Data sous Python
 
 Ce repository contient la matière pour le cours Big Data sous Python à
-l'IAE.  Le cours comporte six séances en cours magistral ainsi que
-trois en TD, deux heures chacune.  L'objectif du cours est de
-présenter les techniques de machines à support vectoriel et des
-réseaux de neurones avec applications en python.
+l'IAE, y compris les notes pour le prof qui serait peut-être, mais
+seulement par hasard, compréhensibles en lecture simple.  Le cours
+comporte six séances en cours magistral ainsi que trois en TD, deux
+heures chacune.  L'objectif du cours est de présenter les techniques
+de machines à support vectoriel et des réseaux de neurones avec
+applications en python.
 
 Vous aurez des travaux à faire chez vous entre les cours qui ne seront
 pas notées.  Il y aura ensuite des contrôles continus en début de
@@ -12,7 +14,7 @@ séance (5-10 minutes) qui seront généralement facile si vous avez fait
 le travail demandé et impossible sinon.  Le dernier CM sera dédié à
 une évaluation écrite.
 
-Nous allons prendre comme hypothèse au moins les suppositions suivante
+Nous allons prendre comme hypothèses au moins les suppositions suivante
 :
 
 * Vous savez programmer.  Vous connaissez déjà au moins les bases de python
@@ -21,20 +23,20 @@ Nous allons prendre comme hypothèse au moins les suppositions suivante
 * Vous êtes suffisamment compétent en anglais pour lire des textes
   simples (surtout, tutoriels) en anglais.
 
-Lors des cours magistraux, vous n'aurez pas besoin de votre
-ordinateur.  D'ailleurs, il est fortement recommandé d'avoir du papier
+Lors des cours magistraux, vous n'aurez pas besoin de vos
+ordinateurs.  D'ailleurs, il est fortement recommandé d'avoir du papier
 et de pouvoir écrire.
 
 # Github
 
-Vous devez créer un repository github pour le cours afin de pouvoir
-collaborer entre vous.  En outre, toute question que vous posez hors
-cours doit impérativement passer par un github issue (sur votre repo,
-vous me taguez).
+Vous devez chacun créer un repository github pour le cours afin de
+pouvoir collaborer entre vous.  En outre, toute question que vous
+posez hors cours doit impérativement passer par un github issue (sur
+votre repo, vous me taguez).
 
 Pour toute question en remote, les règles de bons sens suivants s'appliquent :
 
-* C'est une question.  "Je ne comprends pas", par exemple, est un bon contre-exemple d'une question.
+* C'est une question.  Un bon contre-exemple serait la phrase "je ne comprends pas X".
 * Vous expliquez ce que vous avez compris, ce que vous avez essayé.
 * Vous expliquez avec qui dans le cours vous avez consulté / collaboré afin d'essayer de comprendre.  Vous les taguez également.
 * Sachez que le debugging est difficile pour tout le monde.  Si un point de debugging me paraît facile, je vous montrerez ce que je vois.  Mais souvent il faut passer du temps, qu'on soit débutant ou confirmé, afin de trouver un bug.  C'est d'ailleurs comment on apprend.
