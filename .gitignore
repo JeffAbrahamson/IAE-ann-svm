@@ -105,3 +105,6 @@ venv.bak/
 
 # Emacs
 *~
+
+# LaTeX
+*.aux
