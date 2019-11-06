@@ -3,13 +3,21 @@
 
 \begin{document}
 
+Let's look at the problem of recognising hand-written digits. \\
+Good toy problem: practical, hard, simple. \\
+It will take us the whole lecture to do a first draft on how to solve
+this problem.
+
+Humans can do it, so maybe think about how we might do it.
+
+
 \notetitle{Neural Networks}
 
 ANN
 \begin{itemize}
 \item Long a curiosity
 \item 2012 paper, Hinton, image classification, 1000 categories, 60 million parameters
-\item neurones : axone, terminaison de l'axone, noyau, dendrites
+\item neurones : axone, terminaison de l'axone, noyau, dendrites; activation energy
 \end{itemize}
 
 \input{neuron.pdf_t}
@@ -44,7 +52,7 @@ We want some desired function, $d = g(x)$.
 
 Perceptron is a supervised algorithm.  Given inputs $D = \{(x_j, d_j)\}$, want classifier $f$.
 
-We'll call $x_{j,i}$ the value of feature $i$ in training datum $j$.
+We'll call $x_{j,i} = x^{(j)}_i$ the value of feature $i$ in training datum $j$.
 We set $x_{j,0}\equiv 1$.  This way we don't have to think about bias.
 
 \textbf{Perceptron algorithm:}
@@ -141,7 +149,8 @@ Recall geometry: decision boundary is perpendicular to weight vector.
 \exercise{In python, implement (from scratch) a perceptron algorithm
   with (at least) two inputs.  It should accept as input a matrix of
   training data (numpy \texttt{ndarray} is your friend) and an array
-  of supervision classes.  Push to your own git repo for the course.}
+  of supervision classes.  Separately, use it to classify a simple
+  logic function.  Push to your own git repo for the course.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Perceptron and MNIST}
@@ -315,6 +324,39 @@ In other words,
 
 \exercise{Compute all of the partial derivatives in the $2\times 2$
   network above, assuming the interconnections we've shown.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{MLP}
+
+This is our first step from 2 neurons to millions.
+
+This is a real neural network.  It's not a perceptron.  Geoffrey Hinton apologised.
+
+Back to computing hand-written digits.
+
+$8\times 8$, then $16\times 16$.  Maybe $32\times 32$, but let's do
+$28\times 28$ for fun.  We'll assume gray scale with activation in
+$[0,1]$.
+
+We'll use sigmoids to make intermediate activates also in $(0,1)$.
+
+Show hidden layers.  Make 16 in each (somewhat arbitrary).
+
+Then $784\times 16 + 16\times 16 + 16 \times 10 = 12960$ weights.
+Plus biases, so let's say 13K.
+
+We might hope intermediate layers capture abstraction: say edges then
+loops.  This time around, they don't.
+
+Walk through backpropagation here.  Note that $\nabla C$ tells us
+which changes matter the most.
+
+Talk about inverse images of neuron outputs.
+
+Talk about strange ways ANNs get things wrong (i.e., they don't
+recognise what we do, they can be confident about garbage).
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Deep networks}
