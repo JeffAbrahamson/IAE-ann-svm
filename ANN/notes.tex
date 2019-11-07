@@ -50,6 +50,10 @@ We want some desired function, $d = g(x)$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Too simple example: perceptron}
 
+Let's take a quick detour into something that looks like a neural
+network, is very simple, but exhibits a different sort of complexity
+than our simple neuron.
+
 Perceptron is a supervised algorithm.  Given inputs $D = \{(x_j, d_j)\}$, want classifier $f$.
 
 We'll call $x_{j,i} = x^{(j)}_i$ the value of feature $i$ in training datum $j$.
@@ -97,7 +101,8 @@ w(t+1) = \left\{
 
 The weight are updated at the last step after each training sample.
 
-Converges if separable.
+Converges if separable.\\
+Note we don't need a learning rate.
 
 A perceptron with two inputs looks like this:
 \begin{displaymath}
@@ -166,6 +171,10 @@ Talk about OvO, OvA.
 This just introduces voting\dots
 
 Discuss: Why is it important that weights are non-binary here?
+
+Note that many problems admit multiple solutions.  The perceptron will
+pick one, but not necessarily the best.  The ``perceptron of optimum
+stability'' (SVM) was designed to solve this problem.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
