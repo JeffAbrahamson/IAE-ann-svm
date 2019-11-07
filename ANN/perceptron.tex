@@ -55,15 +55,12 @@
 
   Because I am lazy, I'd rather not learn the bias independently, so
   let $x_3\equiv 1$ and when we set $w_1$ and $w_2$ to random values
-  in $[0,1]$, we set $w_3=b$.  (In a computer program, we should
-  initialise $b$ randomly, as the $w_{n+1}$ that it is.  Numerical
-  analysts tell us that this provides better numerical stability.)
+  in $[0,1]$ to initialise learning, we also set $w_3$ to a similar
+  random value.  (We use random values because numerical analysts tell
+  us that this provides better numerical stability.)
 
-  For the sake of this proof, and with malice of foresight (because we
-  know the value won't matter in the end for this proof), we'll start
-  by setting $b=0$.  If we now agree that our vectors are now
-  three-dimensional without changing their names, the perceptron's
-  output may be written
+  If we now agree that our vectors are now three-dimensional without
+  changing their names, the perceptron's output may be written
   \begin{equation}
     \label{z}
     z = \begin{cases}
@@ -73,9 +70,11 @@
   \end{equation}
   We must now write $D=\{ (0, 0, 1), (0, 1, 1), (1, 0, 1), (1, 1, 1) \}$ .
 
-  Suppose that XOR is linearly separable.  Then we may write the four
-  training cases of our simple perceptron (one line for each element of
-  $D$ and $d$ respectively) thus:
+  Suppose that XOR is linearly separable.  Then when we learn the
+  final weights for our perceptron, we will have succeeded in
+  separating the elements of $D$ according to the values of $d$.  Then
+  we may write the four training cases of our simple perceptron (one
+  line for each element of $D$ and $d$ respectively) thus:
   \begin{align*}
     z((0,0,1)) & = 0 \\
     z((0,1,1)) & = 1 \\
@@ -90,18 +89,27 @@
     w_11 + w_20 + w_31  & > 0 \\
     w_11 + w_21 + w_31  & \le 0
   \end{align*}
-  Dropping the zero terms (and remembering $w_3=0$) and remembering
-  the multiplicative identity, this yields
+  Dropping the zero terms and remembering the multiplicative identity,
+  this yields
   \begin{align}
-    \label{contr}
-    w_2  & > 0 \nonumber \\
-    w_1   & > 0 \nonumber \\
-  w_1 + w_2  & \le 0
+    \label{contr1}
+    w_3 & \le 0 \\
+    \label{contr2}
+    w_2 + w_3  & > 0 \\
+    \label{contr3}
+    w_1 + w_3   & > 0 \\
+    \label{contr4}
+    w_1 + w_2  + w_3 & \le 0
 \end{align}
 
-But two strictly positive real numbers may not have non-positive sum,
-so (\ref{contr}) is a contradiction, and so XOR is not linearly
-separable.
+Summing (\ref{contr2}) and (\ref{contr3}), we see that
+$(w_1+w_2+w_3) + w_3 > 0$.  Since $w_3\le 0$ by (\ref{contr1}),
+$-w_3\ge 0$, this is thus equivalent to
+\begin{displaymath}
+  (w_1+w_2+w_3) > -w_3 \ge 0
+\end{displaymath}
+We see then that (\ref{contr4}) yields a contradiction, and so XOR is
+not linearly separable.
 
 \end{proof}
 
