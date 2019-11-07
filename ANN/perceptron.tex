@@ -1,0 +1,110 @@
+\documentclass[12 pt]{report}
+%\usepackage[frenchb]{babel}
+%\usepackage{draftcopy}
+%\usepackage{url}
+%%% eurosym provides \euro
+%\usepackage{eurosym}
+%%% Use \pounds for GBP
+\usepackage{fullpage}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+%\usepackage{url}
+\usepackage{relsize}
+\usepackage{amsmath,mathtools}  % Mathtools provides dcase.
+\usepackage{amsthm}
+%\usepackage{eulervm}            % Euler VM fonts (for math mode) (but makes \hat not work)
+%\usepackage[scaled]{helvet}
+%\usepackage{listings}
+\usepackage{mathabx}            % Provides nicer \land.
+%\usepackage{xcolor}
+%\usepackage{graphicx}
+
+
+\pagestyle{empty}
+\parskip=8 pt
+\raggedright
+
+\begin{document}
+
+\centerline{\Large XOR is not linearly separable}
+\bigskip
+
+
+\begin{proof}
+
+  If XOR is linearly separable, a perceptron can separate it.
+  We will construct a two input, one output perceptron to compute XOR.
+  We will show that this leads to a contradiction, and so our
+  assumption that XOR is not linearly separable must be false.
+
+  Our perceptron's inputs are $x_1$ and $x_2$ and have associated
+  weights $w_1$ and $w_2$ respectively.  Then we have $y=w\cdot x + b$
+  and the output of the perceptron is
+  \begin{displaymath}
+    z = \begin{cases}
+      1 & \mbox{if } y = w\cdot x + b > 0, \\
+      0 & \mbox{otherwise}
+    \end{cases}
+  \end{displaymath}
+
+  Our training data is $D=\{ (0, 0), (0, 1), (1, 0), (1, 1) \}$ and the
+  desired output values are $d=\{0, 1, 1, 0\}$.
+
+  Because I am lazy, I'd rather not learn the bias independently, so
+  let $x_3\equiv 1$ and when we set $w_1$ and $w_2$ to random values
+  in $[0,1]$, we set $w_3=b$.  (In a computer program, we should
+  initialise $b$ randomly, as the $w_{n+1}$ that it is.  Numerical
+  analysts tell us that this provides better numerical stability.)
+
+  For the sake of this proof, and with malice of foresight (because we
+  know the value won't matter in the end for this proof), we'll start
+  by setting $b=0$.  If we now agree that our vectors are now
+  three-dimensional without changing their names, the perceptron's
+  output may be written
+  \begin{equation}
+    \label{z}
+    z = \begin{cases}
+      1 & \mbox{if } y = w\cdot x > 0, \\
+      0 & \mbox{otherwise}
+    \end{cases}
+  \end{equation}
+  We must now write $D=\{ (0, 0, 1), (0, 1, 1), (1, 0, 1), (1, 1, 1) \}$ .
+
+  Suppose that XOR is linearly separable.  Then we may write the four
+  training cases of our simple perceptron (one line for each element of
+  $D$ and $d$ respectively) thus:
+  \begin{align*}
+    z((0,0,1)) & = 0 \\
+    z((0,1,1)) & = 1 \\
+    z((1,0,1)) & = 1 \\
+    z((1,1,1)) & = 0
+  \end{align*}
+  In other words, using (\ref{z}), we can express the same system in
+  terms of $w_1x_1 + w_2x_2 + w_3x_3$, and so we have
+  \begin{align*}
+    w_10 + w_20 + w_31 & \le 0 \\
+    w_10 + w_21 + w_31  & > 0 \\
+    w_11 + w_20 + w_31  & > 0 \\
+    w_11 + w_21 + w_31  & \le 0
+  \end{align*}
+  Dropping the zero terms (and remembering $w_3=0$) and remembering
+  the multiplicative identity, this yields
+  \begin{align}
+    \label{contr}
+    w_2  & > 0 \nonumber \\
+    w_1   & > 0 \nonumber \\
+  w_1 + w_2  & \le 0
+\end{align}
+
+But two strictly positive real numbers may not have non-positive sum,
+so (\ref{contr}) is a contradiction, and so XOR is not linearly
+separable.
+
+\end{proof}
+
+
+\end{document}
+
