@@ -15,7 +15,7 @@ clf_1.fit(X, y)
 
 # What do these functions do?
 clf_1.score(X, y)
-cfl.predict([X[2]])
+clf_1.predict([X[2]])
 
 
 # This is rubbish.  (Why?)
