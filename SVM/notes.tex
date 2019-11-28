@@ -243,9 +243,9 @@ So combining with eq. (\ref{eq:width-raw}), we get
 
 We want to maximise (\ref{eq:width}).
 
-So we can maximise $\frac{1}{\parallel w\parallel}$. \\[2mm]
-So we can minimise $\parallel w\parallel$.\\[2mm]
-So we can minimize $\parallel w\parallel^2$.
+So we can maximise $\frac{1}{\parallel w\parallel}$ $\Rightarrow$
+minimise $\parallel w\parallel$ $\Rightarrow$
+minimize $\;\frac 12 \parallel w\parallel^2$.
 
 \bigskip
 
@@ -265,7 +265,7 @@ Let's use the Lagrangian!
 and so
 \begin{equation}
   \label{eq:w}
-  w = \sum\lambda y_i x_i
+  w = \sum\lambda_i y_i x_i
 \end{equation}
 
 So $w$ is a linear combination of the samples!
@@ -300,6 +300,8 @@ The boxed portion is zero, so this leaves us with
   x_i\cdot x_j
 \end{equation}
 
+This is the optimisation: the part where we learn.
+
 So the optimisation depends on on the dot products of pairs of
 samples!
 
@@ -310,10 +312,15 @@ Let's go back to our decision rule, eq. (\ref{eq:decision-rule}).
 \begin{displaymath}
   \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
 \end{displaymath}
-So the decision boundary only depends on the sample vector and unknown!
+Thi is the the decision boundary: it only depends on the sample vector
+and unknown!
 
 It can be shown that this is a convex space, so we can't get stuck at
 local maxima.
+
+We've seen that we can learn and decide using only dot products among
+sample data points and between sample data points and unknown (to be
+classified) points.  This is the property that lets us use kernels.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
