@@ -1,0 +1,138 @@
+\input ../notes-header.tex
+
+\begin{document}
+
+\notetitle{Last Day}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{SVM and Soft Margins}
+
+First let's review SVM.  \blue{In blue I note the more important
+  changes needed for soft margins, in which we'll add slack variables
+  $\boxed{\zeta_i > 0}\,$.  $C$ is a regularisation term.}
+
+We had a decision rule
+\begin{displaymath}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{displaymath}
+
+We introduced points $x_+$ and $x_-$ such that
+\begin{align*}
+  w\cdot x_+ + b & \ge 1
+  \\
+  w\cdot x_- + b & \le -1
+\end{align*}
+
+For convenience, we introduced
+\begin{equation*}
+  y_i =
+  \begin{cases}
+    1 & \mbox{positive samples} \\
+    -1 & \mbox{negative samples}
+  \end{cases}
+\end{equation*}
+
+Multiplying by $y_i$, we learned that
+\begin{displaymath}
+  y_i(w\cdot x_i + b) - 1 \blue{+ \zeta} \ge 0
+\end{displaymath}
+
+So for $x_i$ on the margin, we had
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) - 1 = 0}
+\end{displaymath}
+
+We want to maximise the margin, and we learned that this meant we
+should look at minimising
+\begin{displaymath}
+  \frac 12 w\cdot w \blue{+ C\sum_i \zeta_i}
+  = \frac 12 \parallel w \parallel^2 \blue{+ C\sum_i \zeta_i}
+\end{displaymath}
+
+Then we used the Lagrangian to find an objective function
+\begin{displaymath}
+  \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+  x_i\cdot x_j
+\end{displaymath}
+and a recognition function
+\begin{displaymath}
+    \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+\end{displaymath}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Popular Kernels}
+
+Linear kernel:
+$(u\cdot v + 1)$
+
+Polynomial kernel:
+$(u\cdot v + 1)^n$
+
+Radial basis function (RBK, RBF):
+\begin{displaymath}
+  e^{(-\parallel x_i - x_j\parallel) / \sigma}
+\end{displaymath}
+(Note: If $\sigma$ is too small, we overfit.)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{ANN vs SVN}
+
+There's also logistic regression, which most of the time should be the
+first thing you try.
+
+SVM is based on geometrical properties of the data while logistic
+regression is based on statistical approaches.
+
+Some rules of thumb:
+\begin{itemize}
+\item Generally ANNs need more data than linear classifiers.
+\item ANN training is more easily parallelised (dot products vs matrix
+  multiplications)
+\item If you think your data might be linearly separable, you should
+  start with a linear separator (logistic regression or maybe SVM with
+  linear kernel).
+\item Lots of features, few training examples: Using logistic
+  regression or SVM without a kernel.  It's unlikely that you'll be
+  able to learn a complex surface.
+\item Few features and many training examples: SVM with Gaussian
+  kernel may work (if linear separators are inadequate).
+\end{itemize}
+
+SVN with a non-linear kernel and MLP are often similar.  You should
+start with SVM.  It is very often more efficient.  It is generally
+also easier to explain.
+
+The two most important points:
+\begin{itemize}
+\item A NN (or an SVM) is often the second best solution to a
+  problem. The best solution is to understand your problem better.
+\item Features are king.  No algorithm will overcome bad features, and
+  time spent on features is generally well worth it.
+\end{itemize}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Learning Curves}
+
+Plot training score and cross validation score against training
+iterations.
+
+Discuss what it means.  In particular, discuss these points:
+\begin{itemize}
+\item convergence detection
+\item convergence rate (and parameter tuning)
+\item comparing algorithms
+\item will more data help?
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Grid Search}
+
+Discussion of hyperparameters.
+
+
+\end{document}
