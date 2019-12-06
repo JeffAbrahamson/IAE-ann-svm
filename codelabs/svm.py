@@ -32,3 +32,7 @@ clf_2.decision_function_shape = "ovr"
 dec = clf_2.decision_function([[1]])
 dec.shape[1]                    # 4 classes
 
+clf_2_ovr = svm.SVC(gamma='scale', decision_function_shape='ovr')
+clf_2_ovr.fit()
+for i in range(4): 
+    print(clf_2_ovr.decision_function([[i]]))
