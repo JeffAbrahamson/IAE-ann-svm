@@ -1,8 +1,9 @@
-# SVN et Réseaux de neurones
+# SVN et réseaux de neurones
 
-Ce repository contient la matière pour le cours SVN et Réseaux de
-neurones (officiellement "Big Data sous Python") à l'IAE, y compris
-les notes pour le prof qui serait peut-être par un joli hasard
+Ce repository contient la matière pour le cours _SVN et réseaux de
+neurones_ (officiellement "_Big Data sous Python_") à l'IAE de
+l'Université de Nantes.  Vous y trouverez également
+les notes pour le prof qui serait peut-être, par un joli hasard,
 compréhensibles en lecture simple.  Le cours comporte six séances de
 deux heures en CM ainsi que trois en TD.  L'objectif du cours est de
 présenter les techniques de machines à support vectoriel (SVM) et des
