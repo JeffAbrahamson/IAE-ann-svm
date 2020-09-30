@@ -29,6 +29,19 @@ Lors des cours magistraux, vous n'aurez pas besoin de vos
 ordinateurs.  D'ailleurs, il est fortement recommandé d'avoir du papier
 et de pouvoir écrire, car les présentations seront souvent visuelles.
 
+# Évaluation
+
+* CC en début de cours (10 minutes précises) - 5 x 2 points
+* Projet final en binôme
+  * Choisir une compétition kaggle (kaggle.com) non-clôturé (date butoir : deuxième cours) - 2 points
+  * Communiquer un repo github sur lequel vous allez collaborer et communiquer votre projet  (date butoir : deuxième cours) - 2 points
+  * Communiquer l'achèvement de votre projet (date butoir : dix jours après le dernier cours, soit le 14 décembre à 06h00) - 2 points
+  * Communiquer l'achèvement de votre projet une semaine avant la date butoir (soit le 7 décembre à 06h00) - 2 points supplémentaire
+  * Rapport écrit (dans votre repo github, en format pdf) qui explique ce que vous avez fait, ce que vous avez essayé, ce qui a marché, ce qui n'a pas marché, et quels sont vos résultats - 10 points
+  * Votre projet peut tourner dans une machine vagrant dont vous fournissez le Vagrantfile, tout le code source est présent - 4 points
+  * Le résultat que donne votre code est cohérent avec votre rapport - 4 points
+  * Soutenance orale individuelle de 10-15 minutes de votre projet (une date durant la semaine de 14 décembre) - 16 points
+
 # Github
 
 Vous êtes en train de préparer une carrière en économétrie ou data
