@@ -11,13 +11,12 @@ réseaux de neurones (ANN) avec applications en python.
 
 Vous aurez des travaux à faire chez vous entre les cours qui ne seront
 pas notées.  Il y aura ensuite des contrôles continus en début de
-séance (5-10 minutes) qui seront généralement facile si vous avez fait
-le travail demandé et impossible sinon.  Votre capacité de faire les
+séance (5-10 minutes) qui seront généralement faciles si vous avez fait
+le travail demandé et impossibles sinon.  Votre capacité de faire les
 CC sera généralement très indicative de votre capacité de réussir au
 cours.
 
-Nous allons prendre comme hypothèses au moins les suppositions suivante
-:
+Nous allons prendre comme hypothèses au moins les suppositions suivantes :
 
 * Vous savez programmer.  Vous connaissez déjà au moins les bases de python
   (par exemple, de l'année dernière).
@@ -33,12 +32,13 @@ et de pouvoir écrire, car les présentations seront souvent visuelles.
 
 * CC en début de cours (10 minutes précises) - 5 x 2 points
 * Projet final en binôme
-  * Choisir une compétition kaggle (kaggle.com) non-clôturé (date butoir : deuxième cours) - 2 points
-  * Communiquer un repo github sur lequel vous allez collaborer et communiquer votre projet  (date butoir : deuxième cours) - 2 points
+  * Vous composer en binôme - 0 points
+  * Choisir une compétition kaggle (kaggle.com) non-clôturé, pas la même qu'une autre équipe (date butoir : deuxième cours) - 2 points
+  * Communiquer un repo github sur lequel vous allez collaborer et communiquer votre projet et la composition de votre équipe par issue sur ce repo  (date butoir : deuxième cours) - 2 points
   * Communiquer l'achèvement de votre projet (date butoir : dix jours après le dernier cours, soit le 14 décembre à 06h00) - 2 points
   * Communiquer l'achèvement de votre projet une semaine avant la date butoir (soit le 7 décembre à 06h00) - 2 points supplémentaire
-  * Rapport écrit (dans votre repo github, en format pdf) qui explique ce que vous avez fait, ce que vous avez essayé, ce qui a marché, ce qui n'a pas marché, et quels sont vos résultats - 10 points
-  * Votre projet peut tourner dans une machine vagrant dont vous fournissez le Vagrantfile, tout le code source est présent - 4 points
+  * Rapport écrit (dans votre repo github, en format pdf) qui explique ce que vous avez fait, ce que vous avez essayé, ce qui a marché, ce qui n'a pas marché, et quels sont vos résultats - en français ou en anglais comme vous voulez, la soutenance sera dans la même langue que le rapport - 10 points
+  * Votre projet peut tourner dans une machine vagrant dont vous fournissez le Vagrantfile, tout le code source est présent avec mode d'emploi - 4 points
   * Le résultat que donne votre code est cohérent avec votre rapport - 4 points
   * Soutenance orale individuelle de 10-15 minutes de votre projet (une date durant la semaine de 14 décembre) - 16 points
 
@@ -60,13 +60,13 @@ outil informatique en autonomie.  Aussi, le sujet du cours ne sera pas
 "comment se servir de git".
 
 En outre, toute question que vous posez hors cours doit impérativement
-passer par un github issue (sur votre repo, vous me taguez).
+passer par un github issue (vous me taguez si vous voulez une réponse).
 
 Pour toute question en remote, les règles de bons sens suivants s'appliquent :
 
 * C'est une question.  Un bon contre-exemple serait la phrase "je ne comprends pas X".
 * Vous expliquez d'abord ce que vous avez compris, ce que vous avez essayé.
-* Vous expliquez avec qui dans le cours vous avez consulté / collaboré afin d'essayer de comprendre.  Vous les taguez également.  Consulter sans réfléchir est une erreur de jeunesse.  Ne consulter personne est généralement une très mauvaise stratégie.
+* Vous expliquez avec qui dans le cours vous avez consulté / collaboré afin d'essayer de comprendre.  Vous les taguez également.  Consulter sans réfléchir est une erreur (très commune) de jeunesse.  Ne consulter personne est généralement une très mauvaise stratégie.
 * Sachez que le debugging est difficile pour tout le monde.  Si un point de debugging me paraît facile, je vous montrerez ce que je vois.  Mais souvent il faut passer du temps, qu'on soit débutant ou confirmé, afin de trouver un bug.  C'est d'ailleurs comment on apprend.
 
 Les question en cours, bien évidemment, ne sont pas assujetties à
