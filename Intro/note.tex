@@ -18,21 +18,24 @@ A better title would be ``Fun with Separators''.\\
 
 \section*{What we'll learn}
 
+Things you know and relationships to them:
 \begin{itemize}
-\item SVM
+\item Regression (minimise $\parallel Xb^T-y\parallel$) --- lasso (minimise $\parallel Xb^T-y\parallel - \lambda\parallel b\parallel $) --- ridge (Tikhonov regularisation) (minimise something a bit more complicated)
+\item Logistic regression --- think about naive bayesian classifiers --- $\pr(x\mid y)$ --- and then use the (logistic) classifier and learn it directly from the data --- $\pr(y\mid x)$
+\item CARTs
+\item Random forests
+\item (CARTs and RF are also usable for regression.)
+\end{itemize}
+
+I explain what these things are in high-level terms:
+
+\begin{itemize}
+\item SVM --- dot product permits kernel trick
 \item ANN
 \end{itemize}
 
 Note that ANN is not ``more advanced'' just because it's second.  It's
 just harder.
-
-Things you know and relationships to them:
-\begin{itemize}
-\item Logistic regression
-\item CARTs
-\item Random forests
-\item Also, these techniques are usable for regression
-\end{itemize}
 
 
 \section*{Format}
@@ -56,6 +59,7 @@ You should probably plan to spend 2--3 hours outside of class for each
 hour in class.  There is, historically, a very strong correlation
 between your preparation time and your success.
 
+(Discussion based on README here.)
 
 \section*{github}
 

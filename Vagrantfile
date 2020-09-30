@@ -74,6 +74,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get upgrade -y
     sudo apt-get install -y  python3-virtualenv virtualenv python python3
     sudo apt-get install -y  gcc g++ python3-dev
+    cd /vagrant
     virtualenv --python=python3 venv
     . venv/bin/activate
     pip install -r requirements.txt
