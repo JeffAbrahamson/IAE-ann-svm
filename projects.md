@@ -49,3 +49,9 @@
 * [kaggle link](https://www.kaggle.com/c/riiid-test-answer-prediction)
 * [project link](https://github.com/salome-hennebois/Big-Data-sous-Python)
 
+## Petals to the Metal: Flower Classification on TPU
+
+* Laurianne M
+* Lucas A
+* [kaggle link](https://www.kaggle.com/c/tpu-getting-started)
+* [project link](https://github.com/Delta9-bit/ML-Class-)
