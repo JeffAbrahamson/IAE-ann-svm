@@ -35,3 +35,9 @@
 * [kaggle link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
 * [project link](https://github.com/nicolbl95/Repo-Python)
 
+## Predict Future Sales
+
+* Naoufali
+* Darlene
+* [kaggle link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales)
+* [project link]()
