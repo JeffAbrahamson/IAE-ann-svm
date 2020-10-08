@@ -21,3 +21,10 @@
 * [kaggle link](https://www.kaggle.com/c/digit-recognizer)
 * [project link](https://github.com/Nasseha/ML)
 
+## Contradictory, My Dear Watson
+
+* Julie P
+* Marina G
+* [kaggle link](https://www.kaggle.com/c/contradictory-my-dear-watson)
+* [project link](https://github.com/Julie-Perron/Projet-ANN-SVN-MarinaGourin-JuliePerron)
+
