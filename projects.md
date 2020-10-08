@@ -28,3 +28,10 @@
 * [kaggle link](https://www.kaggle.com/c/contradictory-my-dear-watson)
 * [project link](https://github.com/Julie-Perron/Projet-ANN-SVN-MarinaGourin-JuliePerron)
 
+## House Prices: Advanced Regression Techniques
+
+* Nicolas D
+* Maura T
+* [kaggle link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
+* [project link](https://github.com/nicolbl95/Repo-Python)
+
