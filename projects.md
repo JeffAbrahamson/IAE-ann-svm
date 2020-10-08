@@ -37,7 +37,15 @@
 
 ## Predict Future Sales
 
-* Naoufali
-* Darlene
+* Naoufali M
+* Darlene N
 * [kaggle link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales)
 * [project link]()
+
+## Riiid! Answer Correctness Prediction
+
+* Maxime B
+* Salomé H
+* [kaggle link](https://www.kaggle.com/c/riiid-test-answer-prediction)
+* [project link](https://github.com/salome-hennebois/Big-Data-sous-Python)
+
