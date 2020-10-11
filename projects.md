@@ -61,5 +61,5 @@
 * Diane T
 * Teodoro M
 * Riwan P
-* [kaggle link](https://www.kaggle.com/c/titanic)
-* [student repo link](https://github.com/teodoromouniertebas/TitanicDianeTeodoroRiwan)
+* [kaggle link](https://github.com/JeffAbrahamson/IAE-ann-svm/issues/url)
+* [student repo link](https://github.com/teodoromouniertebas/KaggleDianeTeodoroRiwan)
