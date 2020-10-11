@@ -5,7 +5,7 @@
 * Thibaud M
 * Yasmina A
 * [kaggle link](https://www.kaggle.com/c/nlp-getting-started)
-* [student repo link]()
+* [student repo link](https://github.com/Thibaud-Meynier/M2-EKAP)
 
 ## 2.  Petals to the Metal: Flower Classification on TPU
 
@@ -40,7 +40,7 @@
 * Naoufali M
 * Darlene N
 * [kaggle link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales)
-* [student repo link]()
+* [student repo link](https://github.com/Naoufali976/Big_data_python_svm)
 
 ## 7.  Riiid! Answer Correctness Prediction
 
