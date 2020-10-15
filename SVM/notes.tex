@@ -324,6 +324,89 @@ classified) points.  This is the property that lets us use kernels.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Soft Margin}
+
+First let's review SVM.  \blue{In blue I note the more important
+  changes needed for soft margins.}
+
+\blue{The idea is that we still want to maximise the margin, but we
+  want to permit some errors.  And we want to penalise errors based on
+  how bad they are.  And, ideally, not have too many of them.}
+
+\blue{Let's add slack variables $\boxed{\zeta_i \ge 0}\,$.  Let's set
+  $\zeta_i$ to zero for correctly classified points and equal to the
+  distance of misclassification otherwise.  This is called a
+  \textit{hinge function}.  This corresponds to moving the
+  misclassified points to the right side.}
+
+\blue{$C$ is a regularisation term.  We call it the \textit{slack
+    penalty} or \textit{hardness}.}
+
+We had a decision rule
+\begin{displaymath}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{displaymath}
+
+We introduced points $x_+$ and $x_-$ such that
+\begin{align*}
+  w\cdot x_+ + b & \ge 1
+  \\
+  w\cdot x_- + b & \le -1
+\end{align*}
+
+For convenience, we introduced
+\begin{equation*}
+  y_i =
+  \begin{cases}
+    1 & \mbox{positive samples} \\
+    -1 & \mbox{negative samples}
+  \end{cases}
+\end{equation*}
+
+Multiplying by $y_i$, we learned that
+\begin{displaymath}
+  y_i(w\cdot x_i + b) - 1 \blue{+ \zeta} \ge 0
+\end{displaymath}
+
+So for $x_i$ on the margin, we had
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) - 1 = 0}
+\end{displaymath}
+which is the same as
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) = 1}
+\end{displaymath}
+and off the margin we have
+\begin{displaymath}
+  \blue{\boxed{y_i(w\cdot x_i + b) \ge 1-\zeta}}
+\end{displaymath}
+
+We want to maximise the margin, and we learned that this meant we
+should look at minimising
+\begin{displaymath}
+  \frac 12 w\cdot w \blue{+ C\sum_i \zeta_i}
+  = \frac 12 \parallel w \parallel^2 \blue{+ C\sum_i \zeta_i}
+\end{displaymath}
+
+The left part is trying to maximise the margin, the right part is the
+\textit{empirical loss} (how well we fit the training data).
+
+\blue{Note that as $C\rightarrow\infty$ we get the old hard margin
+  classifier. If $C=0$, then $\zeta_i$ can be anything, so we ignore
+  the data.}
+
+Then we used the Lagrangian to find an objective function
+\begin{displaymath}
+  \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+  x_i\cdot x_j
+\end{displaymath}
+and a recognition function
+\begin{displaymath}
+    \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+\end{displaymath}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Kernels}
 
 But what if our data is not linearly separable?  (Example: XOR.)
@@ -343,11 +426,23 @@ In addition, we just need to define a function
 \begin{displaymath}
   k(x_i, x_j) = \phi(x_i)\cdot\phi(y_i)
 \end{displaymath}
-and we don't actually need to know $\phi$.
+and we don't actually need to know $\phi$.  (We need this to satisfy
+some technical conditions.  Cf. Mercer's condition.)
+
+We have something like
+\begin{displaymath}
+  \phi : \R^d -> \R^D
+\end{displaymath}
+fand we could have $D$ very large, even infinite.  So $K$ is a good
+efficiency gain!
+
+You've already seen kernels (ridge regression, aka Tikhonov
+regularisation).
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vbox{
 \notetitle{Popular Kernels}
 
 Linear kernel:
@@ -361,7 +456,7 @@ Radial basis function (RBK, RBF):
   e^{(-\parallel x_i - x_j\parallel) / \sigma}
 \end{displaymath}
 (Note: If $\sigma$ is too small, we overfit.)
-
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{History}
@@ -389,7 +484,7 @@ appreciating the importance of the technique.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\notetitle{Soft Margin}
+\notetitle{}
 
 
 \end{document}
