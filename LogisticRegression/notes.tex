@@ -1,0 +1,214 @@
+\input ../notes-header.tex
+
+\begin{document}
+
+\notetitle{Logistic Regression}
+
+Remember conditional probability?
+
+\begin{defn}[Kolmogorov]
+  \begin{displaymath}
+    \pr(A\mid B) = \frac{\pr(A\cap B)}{\pr(B)}
+  \end{displaymath}
+\end{defn}
+
+\begin{defn}[axiom]
+  \begin{displaymath}
+    \pr(A\cap B) = \pr(A\mid B) \, \pr(B)
+  \end{displaymath}
+\end{defn}
+
+\begin{example}[mostly reliable]
+  Suppose a specific test protocol has a 20\% false negative rate and
+  a 1\% false positive rate.  If you test positive, what is the
+  probability you are positive?
+
+  Suppose first that the incident rate is 50\%.  That it is 1\%.
+\end{example}
+
+\begin{soln}
+    Show with measuring squares, then with (Kolmogorov) definition.
+\end{soln}
+
+\begin{example}[less reliable]
+  Suppose a specific test protocol has a 10\% false negative rate and
+  a 50\% false positive rate.  If you test positive, what is the
+  probability you are positive?
+
+  Suppose first that the incident rate is 50\%.  That it is 1\%.
+\end{example}
+
+\begin{soln}
+  Show with measuring squares, then with (Kolmogorov) definition.
+\end{soln}
+
+\begin{example}[generating points]
+  Given a point and a gaussian distribution, what is the probability
+  that a point is produced at a given location?  Within a given interal?
+\end{example}
+
+\begin{soln}
+  Show with picture.
+\end{soln}
+
+\begin{example}[validating points]
+  Given a set of points and a new point, what is the probability that
+  the new point is part of that distribution?
+\end{example}
+
+\begin{soln}
+  This is actually logistic regression.
+
+  \begin{itemize}
+  \item Is this obvious?
+  \item Is logistic regression a linear model?  Why or why not?
+  \end{itemize}
+
+  \begin{theorem}{Bayes}
+    \begin{displaymath}
+      \pr(H\mid D) = \frac{\pr(D\mid H)\, \pr(H)}{\pr(D)}
+    \end{displaymath}
+  \end{theorem}
+  \begin{proof}
+    From axiom definition and symmetry.
+  \end{proof}
+
+  Linear model: $y = \beta x + \beta_0$.
+
+  Logistic regression = learn $\pr(H\mid D)$ or at least $\pr(H\mid
+  x\in D)$.
+
+  Usually one now simply shows
+  \begin{displaymath}
+    \pr(y\mid x) = \frac{1}{1 + e^{-(\beta x + \beta_0)}}
+  \end{displaymath}
+  which is the inverse logit function, $\beta, \beta_0$ are to be
+  learned.
+
+  Recall: logit is $\sigma(x) = 1/(1+e^{-x})$ and is
+  defined by
+  \begin{displaymath}
+    logit(p) = \sigma^{-1}(p) = \ln \left( \frac{p}{1-p} \right)
+  \end{displaymath}
+
+  \begin{example}
+    Making bread during lockdown.\\
+    $H$ is ``made a good loaf of bread''.\\
+    $D$ is vector of technique details (what I did).\\
+    Want $\pr(H\mid D)$, the posterior probability (\textit{probabilité à posteriori})
+
+    This is our signal to look at Bayes theorem.
+    \begin{displaymath}
+      \pr(H\mid D) = \frac{\pr(D\mid H)\, \pr(H)}{\pr(D)}
+    \end{displaymath}
+    Recall that $\pr(D\mid H)$ is the likelihood (vrasemblance),
+    $\pr(H)$ and $\pr(D)$ are the prior (or marginal) probabilities
+    (\textit{probabilités à priori}).
+
+    We also call $\pr(D)$ the evidence.
+
+    $\pr(H)$ we observe.  But the others?  Especially $\pr(D)$ we have
+    no clue.
+
+    So we introduce $\pr(\overline{H})$.
+    \begin{displaymath}
+      \pr(\overline{H}\mid D) = \frac{\pr(D\mid \overline{H})\, \pr(\overline{H})}{\pr(D)}
+    \end{displaymath}
+
+    Divide, the $\pr(D)$'s cancel.  We'll call these odds
+    (\textit{cote} in French).
+
+    \begin{displaymath}
+      C(H\mid D) = \frac{\pr(H\mid D)}{\pr(\overline{H}\mid D)}
+      = \frac{\pr(D\mid H)\, \pr(H)}{\pr(D\mid \overline{H})\,
+        \pr(\overline{H})}
+      = \frac{\pr(D\mid H)}{\pr(D\mid \overline{H})} \, C(H)
+    \end{displaymath}
+
+    A linear model would look like $y = \beta x + \beta_0$.  We don't
+    have that yet.  But we could take logs.
+
+    \begin{displaymath}
+      \ln(C(H\mid D)) =
+      \ln\left( \frac{\pr(D\mid H)}{\pr(D\mid \overline{H})} \right)
+      + \ln(C(H))
+    \end{displaymath}
+  \end{example}
+
+  The first term we call the log likelihood.\\
+  The second term is basically constant, the log prior.
+
+  Assume the log likelihood is basically a linear function of $D$.
+  Then we get
+  \begin{displaymath}
+    \ln(C(H\mid D)) = \beta D + \beta_0
+  \end{displaymath}
+
+  And we can learn $\beta, \beta_0$, then take exponents to get to the
+  quantity $\pr(H\mid D)$ that we wanted at the start.
+\end{soln}
+
+\bigskip
+
+There's more work to do.  We need to do some work to understand in
+detail how to pass this to an optimiser, what the right loss function
+is for gradient descent.  We're not going to do that here.
+
+\begin{lemma}[Aside, only discuss in class if questioned.]
+  We can recover $\pr(H)$ from $C(H)$.
+\end{lemma}
+
+\begin{proof}
+  \begin{align*}
+    C(H) & = \frac{\pr(H)}{\pr(\overline{H})} =
+           \frac{\pr(H)}{1-\pr(H)} \\[2mm]
+    \pr(H) & = (1-\pr(H)) C(H)  \\[2mm]
+         & = \frac{1+C(H)}{1+C(H)}(1-\pr(H)) C(H) \\[2mm]
+         & = \frac{\red{(1+C(H))(1-\pr(H))} C(H)}{1+C(H)} \\[2mm]
+  \end{align*}
+
+  \begin{align*}
+    \red{(1+C(H))(1-\pr(H))} & = \left(1+\frac{\pr(H)}{\pr(\overline
+                               H)}\right) \left(1-\pr(H)\right) \\[2mm]
+                             &= \frac{
+                               \pr(\overline H)
+                               + \pr(H)
+                               - \pr(H)
+                               - \pr(H)^2}
+                               {\pr(\overline H)} \\[2mm]
+                             &= \frac{\pr(\overline H) + \pr(H) -
+                               \pr(H)(\pr(\overline H) + \pr(H))}
+                               {\pr(\overline H)} \\[2mm]
+                             &= \frac{1-\pr(H)}{\pr(\overline H)} \\[2mm]
+                             &= \frac{1-\pr(H)}{1-\pr(H)} \\[2mm]
+                             &= 1
+  \end{align*}
+\end{proof}
+
+\bigskip
+
+Review of this review:
+\begin{itemize}
+\item Logistic regression is a linear model.
+\item It's based on Bayes Theorem.  It gives us probabilities based on
+  observed data.
+\item It's simple to interpret.
+\end{itemize}
+
+The point of this course is going to be to understand two other
+separation algorithms: SVM and ANN.
+
+Both have the property that they can be linear or transform their
+problem to find non-linear separators.
+
+One of the goals of this course is that you don't think of your job as
+trying things until one works.
+
+\textbf{SVM}
+
+Quick introduction to the motivation for SVM: maximum margins.
+
+Reminder for next time: projects, git repos.  Test your python
+installations (or the ones the school provides).
+
+\end{document}
