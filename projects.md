@@ -16,10 +16,10 @@
 
 ## 3.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* Amaury MAILLARD
+* Vincent FATTORELLI
+* [kaggle link](https://www.kaggle.com/c/cassava-leaf-disease-classification/overview/description)
+* [student repo link](https://github.com/AmauMaill/Cassava-Leaf-Disease-Classification)
 
 ## 4.  
 
