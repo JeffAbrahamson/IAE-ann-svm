@@ -1,65 +1,64 @@
 # Student projects
 
-## 1.  Real or Not? NLP with Disaster Tweets
+## 1.  
 
-* Thibaud M
-* Yasmina A
-* [kaggle link](https://www.kaggle.com/c/nlp-getting-started)
-* [student repo link](https://github.com/Thibaud-Meynier/M2-EKAP)
+* Jean-Baptiste Del'Chateau
+* Kyllien Romand
+* [kaggle link](https://www.kaggle.com/c/optiver-realized-volatility-prediction)
+* [student repo link](https://github.com/Kyllien/Optiver-Realized-Volatility-Prediction)
 
-## 2.  Petals to the Metal: Flower Classification on TPU
+## 2.  
 
-* Diana E
-* Sarah K
-* [kaggle link](https://www.kaggle.com/c/tpu-getting-started/rules)
-* [student repo link](https://github.com/sarahkervran/Petals_to_Metal-Flower_Classification)
+* Gwendal SUAU
+* Thibault BREGAL
+* [kaggle link](https://www.kaggle.com/c/gan-getting-started/overview)
+* [student repo link]()
 
-## 3.  Digit recognizer
+## 3.  
 
-* Ariinui T
-* Nasseha S
-* [kaggle link](https://www.kaggle.com/c/digit-recognizer)
-* [student repo link](https://github.com/Nasseha/ML)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 4.  Contradictory, My Dear Watson
+## 4.  
 
-* Julie P
-* Marina G
-* [kaggle link](https://www.kaggle.com/c/contradictory-my-dear-watson)
-* [student repo link](https://github.com/Julie-Perron/Projet-ANN-SVN-MarinaGourin-JuliePerron)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 5.  House Prices: Advanced Regression Techniques
+## 5.  
 
-* Nicolas D
-* Maura T
-* [kaggle link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
-* [student repo link](https://github.com/nicolbl95/Repo-Python)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 6.  Predict Future Sales
+## 6.  
 
-* Naoufali M
-* Darlene N
-* [kaggle link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales)
-* [student repo link](https://github.com/Naoufali976/Big_data_python_svm)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 7.  Riiid! Answer Correctness Prediction
+## 8.  
 
-* Maxime B
-* Salomé H
-* [kaggle link](https://www.kaggle.com/c/riiid-test-answer-prediction)
-* [student repo link](https://github.com/salome-hennebois/Big-Data-sous-Python)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 8.  Petals to the Metal: Flower Classification on TPU
+## 9.  
 
-* Laurianne M
-* Lucas A
-* [kaggle link](https://www.kaggle.com/c/tpu-getting-started)
-* [student repo link](https://github.com/Delta9-bit/ML-Class-)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
 
-## 9.  Titanic
+## 10.  
 
-* Diane T
-* Teodoro M
-* Riwan P
-* [kaggle link](https://github.com/JeffAbrahamson/IAE-ann-svm/issues/url)
-* [student repo link](https://github.com/teodoromouniertebas/KaggleDianeTeodoroRiwan)
+* 
+* 
+* [kaggle link]()
+* [student repo link]()
