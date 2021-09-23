@@ -23,38 +23,38 @@
 
 ## 4.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* Andre ANGWE
+* Sory BARRY
+* [kaggle link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)
+* [student repo link](https://github.com/AndreAng1/SVM-ANN-Andre-M2-EKAP)
 
 ## 5.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* Astrid Valicon
+* Gabin Lagre
+* [kaggle link](https://www.kaggle.com/c/g2net-gravitational-wave-detection/overview/description)
+* [student repo link](https://github.com/astridval/G2Net-Gravitational-Wave-Detection)
 
 ## 6.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* Luc Le Mée
+* Antoine Petiteau
+* [kaggle link](https://www.kaggle.com/c/rsna-miccai-brain-tumor-radiogenomic-classification/overview)
+* [student repo link](https://github.com/AntoinePetiteau/Brain-Tumor-Radiogenomic-Classification)
 
 ## 8.  
 
-* 
-* 
-* [kaggle link]()
+* Sara Meziani
+* Louis Mortreuil
+* [kaggle link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview/description)
 * [student repo link]()
 
 ## 9.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* KOUYATE
+* SIABI
+* [kaggle link](https://www.kaggle.com/c/chaii-hindi-and-tamil-question-answering)
+* [student repo link](https://github.com/Achille1/Projet_M2_Chaii-Hindi_and_Tamil_Question_Answering)
 
 ## 10.  
 
