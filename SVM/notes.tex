@@ -4,133 +4,92 @@
 
 \begin{document}
 
-
-
-
 \notetitle{Support Vector Machines}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Thinking in Statistics}
+
+A beer company did live demonstrations during football halftime:
+invite a few hundred people who prefer the competitor's beer to a
+blind taste test.  Show that half of them actually prefer our beer.
+
+This was done repeatedly on live television.
+
+Discuss.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\notetitle{Lagrange Multipliers}
+\notetitle{How to Have Confidence}
 
-We've talked about optimisation, but life often supplies constraints.
+Talk about leave-one-out cross validation.
 
-Example: Maximise production but there's a budget
+\begin{itemize}
+\item \texttt{train\_test\_split}
+\item learning curves
+\item cross validation \textit{(did you play with matplotlib: scatter,
+  plot?)}
+\item LOOCV
+\end{itemize}
 
-Example: Maximise fun but there's a budget
+Careful in all this about what you can compare!
 
-Example: Live as long as you can on Mars but you have minimum daily
-calorie requirements to survive
-
-\bigskip
-
-Suppose we have a function $f : \mathbbm{R}^n \rightarrow
-\mathbbm{R}$ that we want to maximise.
-
-Then look at $\{x\mid \nabla f(x) = 0 \}$.
-
-\medskip
-
-Suppose moreover that we have another function $g : \mathbbm{R}^n
-\rightarrow \mathbbm{R}$ and that we have some constraint like
-$g(x)=0$.
-
-So
-\begin{displaymath}
-  \mbox{Maximize } f(x,y) \mbox{ subject to } g(x,y) = 0
-\end{displaymath}
-
-\textbf{Example:}
-
-\begin{equation}
-\begin{cases}
-  f(x,y) & = xy \\
-  g(x,y) & = x^2 + y^2 = 1
-\end{cases}
-\end{equation}
-
-How do we approach this?
-
-Consider isoclines $f(x,y) = c$.
-
-And consider isoclines $g(x,y) = c'$ (not necessarily the same
-constant).
-
-We want tangent points.
-
-Recall that gradient is $\bot$ to isoclines.\\
-So we want the points where the $\nabla$ are $\parallel$.
-
-So we want set of
-\begin{displaymath}
-  \{ x \mid \nabla f(x) = \lambda \nabla g(x) \}
-\end{displaymath}
-
-\textbf{Example:}
-
-\begin{equation}
-  \begin{cases}
-    \nabla f & = 
-    \begin{pmatrix}
-      y \\ x
-    \end{pmatrix}
-    \\[8mm]
-    \nabla g & =
-    \begin{pmatrix}
-      2x \\ 2y
-    \end{pmatrix}
-  \end{cases}
-\end{equation}
-
-So
-\begin{equation}
-  \begin{cases}
-    y & = \lambda 2x
-    \\
-    x & = \lambda 2y
-    \\
-    1 & = x^2 + y^2
-  \end{cases}
-\end{equation}
-
-From the first of these we get
-\begin{displaymath}
-  \lambda = \frac{y}{2x} \quad \mbox{ if } x \neq 0
-\end{displaymath}
-
-Substituting into the second,
-\begin{displaymath}
-  x = \frac{y}{2x} \cdot 2y = \frac{y^2}{x} \Rightarrow x^2 = y^2
-  \Rightarrow x = \pm y
-\end{displaymath}
-
-And then the third provides
-\begin{displaymath}
-  2x^2 = 1 \Rightarrow x^2 = \frac 12 \Rightarrow \boxed{x =
-  \frac{\pm\sqrt{2}}{2} \wedge y = -x}
-\end{displaymath}
-
-\exercise{Consider $f(x,y) = x y^2$ subject to $2x^2 + 5y^2 = 2$.}
-
-\exercise{Consider $f(x,y,z) = x^2 y^3 z$ subject to $2x^2 + 5y^2 = 2$.}
+\begin{verbatim}
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import LeaveOneOut
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+\end{verbatim}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\notetitle{Lagrangian}
+\notetitle{Review: Logistic Regression}
 
-We can write
-\begin{displaymath}
-  L = f - \lambda g
-\end{displaymath}
+\begin{defn}[Kolmogorov]
+  \begin{displaymath}
+    \pr(A\mid B) = \frac{\pr(A\cap B)}{\pr(B)}
+  \end{displaymath}
+\end{defn}
 
-Then $\nabla L = 0$ is the set of equations we started with, above.
+\begin{example}[validating points]
+  Given a set of points and a new point, what is the probability that
+  the new point is part of that distribution?
+\end{example}
 
-This is generally a nice form for computers.
+\begin{soln}
+  This is actually logistic regression.
 
-It also transforms the problem from a constrained optimisation
-problem into an unconstrained optimisation problem.
+  \begin{theorem}{Bayes}
+    \begin{displaymath}
+      \pr(H\mid D) = \frac{\pr(D\mid H)\, \pr(H)}{\pr(D)}
+    \end{displaymath}
+  \end{theorem}
+  \begin{proof}
+    From definition and symmetry.
+  \end{proof}
 
+  Changes to odds formulation,
+  \begin{displaymath}
+    C(H\mid D) =
+    = \frac{\pr(D\mid H)}{\pr(D\mid \overline{H})} \, C(H)
+  \end{displaymath}
+
+  To make this look linear, we took logs:
+  \begin{displaymath}
+    \ln(C(H\mid D)) =
+    \ln\left( \frac{\pr(D\mid H)}{\pr(D\mid \overline{H})} \right)
+    + \ln(C(H))
+  \end{displaymath}
+  and then we noted that the log prior is basically a constant and we
+  can assume the first term, the log likelihood, is roughly a linear
+  function of the data.
+  \begin{displaymath}
+    \ln(C(H\mid D)) = \beta D + \beta_0
+  \end{displaymath}
+  And then, if we want to do a bit more arithmetic, we can work
+  backwards and find our familiar equation for logistic regression.
+
+\end{soln}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Decision boundaries}
@@ -175,6 +134,9 @@ which is the same as saying this, which we'll call our decision rule:
   \label{eq:decision-rule}
   \boxed{w\cdot u + b \ge 0 \Rightarrow +}
 \end{equation}
+
+Said differently, the equation of the hyperplane separator is
+$w\cdot u + b = 0$.
 
 But we don't know $b$ or $w$.
 
@@ -251,6 +213,9 @@ minimize $\;\frac 12 \parallel w\parallel^2$.
 
 Let's use the Lagrangian!
 
+\red{\fbox{Talk about this, but skip the detail unless asked.}}
+\bigskip
+
 \begin{equation}
   \label{eq:lagrangian}
   L = \frac 12 \parallel w\parallel^2 - \sum \lambda_i \left[ y_i(w\cdot
@@ -262,7 +227,7 @@ Let's use the Lagrangian!
 \begin{displaymath}
   \frac{\partial L}{\partial w} = w - \sum\lambda y_i x_i = 0
 \end{displaymath}
-and so
+and so \hspace{2mm} \red{\fbox{(show $w$ and note dependence on samples)}}
 \begin{equation}
   \label{eq:w}
   w = \sum\lambda_i y_i x_i
@@ -294,6 +259,8 @@ So what happens to $L$ (eq. \ref{eq:lagrangian})?
   - \boxed{\sum \lambda_i y_i} b + \sum \lambda_i
 \end{equation}
 The boxed portion is zero, so this leaves us with
+\hspace{2mm} \red{\fbox{pick up again here.}}
+
 \begin{equation}
   \label{eq:recognition-rule}
   \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
@@ -322,6 +289,28 @@ We've seen that we can learn and decide using only dot products among
 sample data points and between sample data points and unknown (to be
 classified) points.  This is the property that lets us use kernels.
 
+\bigskip
+
+Next week we'll come back to this and talk about soft margins and
+about kernels.
+
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\notetitle{Scikit Learn Notes}
+
+\begin{verbatim}
+model.fit
+model.predict
+\end{verbatim}
+
+There are toy data sets to play with.
+
+\begin{verbatim}
+import sklearn.datasets as skds
+skds.fetch_covtype
+\end{verbatim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Soft Margin}
