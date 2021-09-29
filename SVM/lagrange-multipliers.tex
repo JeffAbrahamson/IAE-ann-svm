@@ -1,0 +1,132 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+\usepackage{bbm}
+
+\begin{document}
+
+\notetitle{Supplement: Optimising under Constraint}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Lagrange Multipliers}
+
+We've talked about optimisation, but life often supplies constraints.
+
+Example: Maximise production but there's a budget
+
+Example: Maximise fun but there's a budget
+
+Example: Live as long as you can on Mars but you have minimum daily
+calorie requirements to survive
+
+\bigskip
+
+Suppose we have a function $f : \mathbbm{R}^n \rightarrow
+\mathbbm{R}$ that we want to maximise.
+
+Then look at $\{x\mid \nabla f(x) = 0 \}$.
+
+\medskip
+
+Suppose moreover that we have another function $g : \mathbbm{R}^n
+\rightarrow \mathbbm{R}$ and that we have some constraint like
+$g(x)=0$.
+
+So
+\begin{displaymath}
+  \mbox{Maximize } f(x,y) \mbox{ subject to } g(x,y) = 0
+\end{displaymath}
+
+\textbf{Example:}
+
+\begin{equation}
+\begin{cases}
+  f(x,y) & = xy \\
+  g(x,y) & = x^2 + y^2 = 1
+\end{cases}
+\end{equation}
+
+How do we approach this?
+
+Consider isoclines $f(x,y) = c$.
+
+And consider isoclines $g(x,y) = c'$ (not necessarily the same
+constant).
+
+We want tangent points.
+
+Recall that gradient is $\bot$ to isoclines.\\
+So we want the points where the $\nabla$ are $\parallel$.
+
+So we want set of
+\begin{displaymath}
+  \{ x \mid \nabla f(x) = \lambda \nabla g(x) \}
+\end{displaymath}
+
+\textbf{Example:}
+
+\begin{equation}
+  \begin{cases}
+    \nabla f & = 
+    \begin{pmatrix}
+      y \\ x
+    \end{pmatrix}
+    \\[8mm]
+    \nabla g & =
+    \begin{pmatrix}
+      2x \\ 2y
+    \end{pmatrix}
+  \end{cases}
+\end{equation}
+
+So
+\begin{equation}
+  \begin{cases}
+    y & = \lambda 2x
+    \\
+    x & = \lambda 2y
+    \\
+    1 & = x^2 + y^2
+  \end{cases}
+\end{equation}
+
+From the first of these we get
+\begin{displaymath}
+  \lambda = \frac{y}{2x} \quad \mbox{ if } x \neq 0
+\end{displaymath}
+
+Substituting into the second,
+\begin{displaymath}
+  x = \frac{y}{2x} \cdot 2y = \frac{y^2}{x} \Rightarrow x^2 = y^2
+  \Rightarrow x = \pm y
+\end{displaymath}
+
+And then the third provides
+\begin{displaymath}
+  2x^2 = 1 \Rightarrow x^2 = \frac 12 \Rightarrow \boxed{x =
+  \frac{\pm\sqrt{2}}{2} \wedge y = -x}
+\end{displaymath}
+
+\exercise{Consider $f(x,y) = x y^2$ subject to $2x^2 + 5y^2 = 2$.}
+
+\exercise{Consider $f(x,y,z) = x^2 y^3 z$ subject to $2x^2 + 5y^2 = 2$.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Lagrangian}
+
+We can write
+\begin{displaymath}
+  L = f - \lambda g
+\end{displaymath}
+
+Then $\nabla L = 0$ is the set of equations we started with, above.
+
+This is generally a nice form for computers.
+
+It also transforms the problem from a constrained optimisation
+problem into an unconstrained optimisation problem.
+
+
+\end{document}

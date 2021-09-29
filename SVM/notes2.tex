@@ -1,0 +1,348 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+\usepackage{bbm}
+
+\begin{document}
+
+\notetitle{Support Vector Machines, part 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Logistic Regression, SVM, Learning Curves}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Thinking in Statistics}
+
+\dots
+
+Discuss.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{How to Have Confidence}
+
+Talk about leave-one-out cross validation.
+
+\begin{itemize}
+\item \texttt{train\_test\_split}
+\item learning curves
+\item cross validation \textit{(did you play with matplotlib: scatter,
+  plot?)}
+\item LOOCV
+\end{itemize}
+
+Careful in all this about what you can compare!
+
+\begin{verbatim}
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import LeaveOneOut
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+\end{verbatim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Review: Linear Models}
+
+\textbf{Logistic Regression.}  Start with Bayes Theorem, ask what is
+the probability that a point belongs to a distribution.
+
+Switch to odds, take logs, assume linearity.
+
+Take exponents and switch back to probability.
+
+\begin{theorem}{Bayes}
+  \begin{displaymath}
+    \pr(H\mid D) = \frac{\pr(D\mid H)\, \pr(H)}{\pr(D)}
+  \end{displaymath}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{SVM (linear)}
+
+We postulated the separator we wanted, called $w$ a vector
+perpendicular to it, postulated $x_+$ and $x_-$ points on the margin,
+and asked how to maximise the margin (the perpendicular distance
+between $x_+$ and $x_-$).
+
+\bigskip
+\centerline{\input{decision-svm1.pdf_t}}
+\bigskip
+
+We set our decision rule thus ($u$ on the positive side of the
+separator):
+\begin{equation}
+  \label{eq:decision-rule}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{equation}
+
+Said differently, the equation of the hyperplane separator is
+$w\cdot u + b = 0$.
+
+But we don't know $b$ or $w$.
+
+Note that the $\pm 1$ indicates the margin.  Zero is the decision
+boundary (the middle line).
+
+We added some constraints so let us calculate them.  We discovered we
+want to maximise (\ref{eq:width}).
+\begin{equation}
+  \label{eq:width}
+  \mbox{width} = \frac{2}{\parallel w\parallel}
+\end{equation}
+
+So we can maximise $\frac{1}{\parallel w\parallel}$ $\Rightarrow$
+minimise $\parallel w\parallel$ $\Rightarrow$
+\fbox{minimize $\;\frac 12 \parallel w\parallel^2$}.
+
+\bigskip
+
+Our optimisation toolkit (gradient descent, mostly) doesn't work for
+constrained optimisation problems.
+
+We use the Lagrangian and learn that $w$ is a linear combination of
+the samples and only depends on the samples.
+
+\begin{equation}
+  \label{eq:w}
+  w = \sum\lambda_i y_i x_i
+\end{equation}
+
+The thing to optimise is (\ref{eq:recognition-rule}), this is where we
+learn, what we optimise.
+
+\begin{equation}
+  \label{eq:learning-rule}
+  \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+  x_i\cdot x_j
+\end{equation}
+
+So the optimisation depends on on the dot products of pairs of
+samples!
+
+\bigskip
+
+Let's go back to our decision rule, eq. (\ref{eq:decision-rule}), and
+write it as a recognition rule:
+
+\begin{equation}
+  \label{eq:recognition-rule}
+  \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+\end{equation}
+Thi is the the decision boundary: it only depends on the sample vector
+and unknown!
+
+It can be shown that this is a convex space, so we can't get stuck at
+local maxima.
+
+We've seen that we can learn and decide using only dot products among
+sample data points and between sample data points and unknown (to be
+classified) points.  This is the property that lets us use kernels.
+
+\bigskip
+
+Next: soft margins and kernels.
+
+\bigskip
+
+
+\notetitle{Soft Margin}
+
+First let's review SVM.  \blue{In blue I note the more important
+  changes needed for soft margins.}
+
+\blue{The further a point is from the separator, the more confident we
+  want to be.}
+
+\blue{The idea is that we still want to maximise the margin, but we
+  want to permit some errors.  And we want to penalise errors based on
+  how bad they are.  And, ideally, not have too many of them.}
+
+\purple{\textit{If the margin is too narrow, it's more likely to
+    overfit.  Misclassifying some points can reduce overfitting.  But
+    if we misclassify too many points, the utility of the classifier
+    decreases.}}
+
+\blue{Let's add slack variables $\boxed{\zeta_i \ge 0}\,$.  Let's set
+  $\zeta_i$ to zero for correctly classified points and equal to the
+  distance of misclassification otherwise.  This is called a
+  \textit{hinge function ("fonction de perte de charnière")}.  This
+  corresponds to moving the misclassified points to the right side.}
+
+\blue{Note that this means a point on the separator incurs a penalty
+  of 1 regardless of which way it's misclassified.}
+
+% https://programmathically.com/understanding-hinge-loss-and-the-svm-cost-function/
+
+\blue{$C$ is a regularisation term.  We call it the \textit{slack
+    penalty} or \textit{hardness (dureté)}.}
+
+\blue{\textit{(slack variable = variable d'ajustement / variable
+    muette / variable d'écarte)}}
+
+We had a decision rule
+\begin{displaymath}
+  \boxed{w\cdot u + b \ge 0 \Rightarrow +}
+\end{displaymath}
+
+We introduced points $x_+$ and $x_-$ such that
+\begin{align*}
+  w\cdot x_+ + b & \ge 1
+  \\
+  w\cdot x_- + b & \le -1
+\end{align*}
+
+For convenience, we introduced
+\begin{equation*}
+  y_i =
+  \begin{cases}
+    1 & \mbox{positive samples} \\
+    -1 & \mbox{negative samples}
+  \end{cases}
+\end{equation*}
+
+Multiplying by $y_i$, we learned that
+\begin{displaymath}
+  y_i(w\cdot x_i + b) - 1 \blue{+ \zeta} \ge 0
+\end{displaymath}
+
+So for $x_i$ on the margin, we had
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) - 1 = 0}
+\end{displaymath}
+which is the same as
+\begin{displaymath}
+  \boxed{y_i(w\cdot x_i + b) = 1}
+\end{displaymath}
+and off the margin we have
+\begin{displaymath}
+  \blue{\boxed{y_i(w\cdot x_i + b) \ge 1-\zeta}}
+\end{displaymath}
+
+We want to maximise the margin, and we learned that this meant we
+should look at minimising
+\begin{displaymath}
+  \frac 12 w\cdot w \blue{+ C\sum_i \zeta_i}
+  = \frac 12 \parallel w \parallel^2 \blue{+ C\sum_i \zeta_i}
+\end{displaymath}
+
+Writing $t_i = w\cdot x_i$ for the misclassification distance of $x_i$, we could also write this
+\begin{displaymath}
+  \frac 12 \parallel w \parallel^2 \blue{+ C\sum_i \max(0, 1-t_i\cdot y_i)}
+\end{displaymath}
+
+
+The left part is trying to maximise the margin, the right part is the
+\textit{empirical loss} (how well we fit the training data).
+
+\blue{Note that as $C\rightarrow\infty$ we get the old hard margin
+  classifier. If $C=0$, then $\zeta_i$ can be anything, so we ignore
+  the data.}
+
+% Then we used the Lagrangian to find an objective function
+% \begin{displaymath}
+%   \sum\lambda_i - \frac 12 \sum_i \sum_j \lambda_i \lambda_j y_i y_j
+%   x_i\cdot x_j
+% \end{displaymath}
+% and a recognition function
+% \begin{displaymath}
+%     \sum \lambda_i y_i x_i\cdot u + b \ge 0 \Rightarrow +
+% \end{displaymath}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Kernels}
+
+But what if our data is not linearly separable?  (Example: XOR.)
+
+The optimisation only depends on dot products, so what if we had a
+function $\phi$ that mapped our problem into a higher dimensional
+space where it is linearly separable?
+
+The learning rule (\ref{eq:learning-rule}) only depends on dot
+products.  So we can map using $\phi$ and optimise in the new space.
+
+In addition, the recognition rule (\ref{eq:recognition-rule}) also
+only depends on dot product.  So we can recognise in the new space,
+too.
+
+In addition, we just need to define a function
+\begin{displaymath}
+  k(x_i, x_j) = \phi(x_i)\cdot\phi(y_i)
+\end{displaymath}
+and we don't actually need to know $\phi$.  (We need this to satisfy
+some technical conditions.  Cf. Mercer's condition.)
+
+We have something like
+\begin{displaymath}
+  \phi : \R^d \rightarrow \R^D
+\end{displaymath}
+and we could have $D$ very large, even infinite.  So $K$ is a good
+efficiency gain!
+
+You've already seen kernels (ridge regression, aka Tikhonov
+regularisation).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vbox{
+\notetitle{Popular Kernels}
+
+Linear kernel:
+$(u\cdot v + 1)$
+
+Polynomial kernel:
+$(u\cdot v + 1)^n$
+
+Radial basis function (RBK, RBF):
+\begin{displaymath}
+  e^{(-\parallel x_i - x_j\parallel) / \sigma}
+\end{displaymath}
+(Note: If $\sigma$ is too small, we overfit.)
+}
+
+\blue{\textit{Explain how this works in practice, especially that you
+    probably just always want RBF unless you get much, much more
+    competent.  Note that we can easily overfit with Gaussian
+    kernels, because linear combinations of them are also kernels and
+    can approximate any continuous function.}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{History}
+
+Vapnick did his PhD on this at Moscow University in the early 1960's.
+He worked at an oncology institute.  He didn't have access to
+computers, so this was mostly of theoretical interest.  No one in the
+West knew about his work.
+
+Someone at Bell Labs discovered him, invited him to visit.  He decided
+to emigrate to the U.S. in 1991.
+
+In 1992 he submitted three papers to NIPS.  All are rejected.
+
+In 1993--1994, Bell Labs becomes interested in OCR and ANNs.  Vapnick
+thinks ANNs suck, bets a colleague a good dinner that SVM will do a
+better job than an ANN.
+
+Colleague tries linear kernel with n=2, and it works.  This was the
+first use of kernels.  (It was in Vapnick's PhD thesis, but he didn't
+think it was very important.)
+
+So it took 30 years from his PhD (understanding the problem) to
+appreciating the importance of the technique.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{To Do}
+
+Play with separator hardness.  Plot it.  Explore.  Come back with
+plots and pictures and stories.
+
+Play with RBF.  It has parameters.  What are they?  What happens when
+you vary them?  Come back with plots and pictures and stories.
+
+How does using RBF affect computation time?  With size of problem?
+
+\end{document}
