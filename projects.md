@@ -58,7 +58,7 @@
 
 ## 10.  
 
-* 
-* 
-* [kaggle link]()
-* [student repo link]()
+* Lucie Vrignaud
+* Cécile Mocher
+* [kaggle link](https://www.kaggle.com/c/ventilator-pressure-prediction/overview)
+* [student repo link](https://github.com/LucieVrignaud/Projet-M2-EKAP-Mocher-Vrignaud)
