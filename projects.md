@@ -4,8 +4,8 @@
 
 * Jean-Baptiste Del'Chateau
 * Kyllien Romand
-* [kaggle link](https://www.kaggle.com/c/optiver-realized-volatility-prediction)
-* [student repo link](https://github.com/Kyllien/Optiver-Realized-Volatility-Prediction)
+* [kaggle link](https://www.kaggle.com/c/jane-street-market-prediction/code)
+* [student repo link](https://github.com/Kyllien/Jane-Street-Market-Prediction)
 
 ## 2.  
 
