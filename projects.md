@@ -62,3 +62,10 @@
 * Cécile Mocher
 * [kaggle link](https://www.kaggle.com/c/ventilator-pressure-prediction/overview)
 * [student repo link](https://github.com/LucieVrignaud/Projet-M2-EKAP-Mocher-Vrignaud)
+
+## 11.
+
+* Quentin Chiffoleau
+* Loïc Corven
+* [kaggle link](https://www.kaggle.com/c/wikipedia-image-caption/overview/timeline)
+* [student repo link](https://github.com/lcorven/PROJET_M2_EKAP_CHIFFOLEAU_CORVEN)
