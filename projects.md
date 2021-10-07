@@ -51,8 +51,8 @@
 
 ## 9.  
 
-* KOUYATE
-* SIABI
+* Mohamed KOUYATE
+* Achille SIABI
 * [kaggle link](https://www.kaggle.com/c/chaii-hindi-and-tamil-question-answering)
 * [student repo link](https://github.com/Achille1/Projet_M2_Chaii-Hindi_and_Tamil_Question_Answering)
 
