@@ -46,8 +46,8 @@
 
 * Sara Meziani
 * Louis Mortreuil
-* [kaggle link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview/description)
-* [student repo link]()
+* [kaggle link](https://www.kaggle.com/c/learnplatform-covid19-impact-on-digital-learning)
+* [student repo link](https://github.com/Sara-Louis/Sara-Meziani-et-Louis-Mortreuil)
 
 ## 9.  
 
