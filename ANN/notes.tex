@@ -20,6 +20,8 @@ ANN
 \item neurones : axone, terminaison de l'axone, noyau, dendrites; activation energy
 \end{itemize}
 
+\purple{\fbox{Show a neuron with dendrites, explain how it works.}}
+
 \input{neuron.pdf_t}
 
 \bigskip
@@ -48,13 +50,114 @@ We want some desired function, $d = g(x)$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Types of neurons}
+
+\bigskip
+\textbf{Linear neuron}
+\begin{displaymath}
+  y = b + \sum_i x_i w_i
+\end{displaymath}
+where
+\begin{align*}
+  y & = \text{output} \\
+  b & = \text{bias} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Binary threshold neuron}
+\begin{align*}
+  z & = \sum_i x_i w_i \\[2mm]
+  y & = \left\{
+      \begin{array}{l}
+        1  \text{ if } z \ge 0 \\
+        0  \text{ otherwise}        
+      \end{array}
+  \right.
+\end{align*}
+where
+\begin{align*}
+  z & = \text{total input} \\
+  y & = \text{output} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Rectified linear neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  y & = \left\{
+      \begin{array}{l}
+        z  \text{ if } z \ge 0 \\
+        0  \text{ otherwise}        
+      \end{array}
+  \right.
+\end{align*}
+where
+\begin{align*}
+  z & = \text{total input} \\
+  y & = \text{output} \\
+  b & = \text{bias} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Sigmoid neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  y & = \frac{1}{1+e^{-z}}
+\end{align*}
+\textit{(This is differentiable.)}
+
+
+\bigskip
+\textbf{Stochastic binary neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  p &= \frac{1}{1+e^{-z}} \\[3mm]
+  y & = \left\{
+      \begin{array}{l}
+        1  \text{ with probability } p \\[2mm]
+        0  \text{ with probability } 1 - p
+      \end{array}
+  \right.
+\end{align*}
+\textit{(a probability distribution)}
+
+\blue{\it Can also do something similar with rectified linear
+  neurons, produce spikes with probability $p$ with a Poisson
+  distribution.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Neural Networks}
+
+\textbf{Architecture} is how we connect the states.
+
+\textbf{Feed forward network}
+\begin{itemize}
+\item Flow is unidirectional
+\item No loops
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Too simple example: perceptron}
 
 Let's take a quick detour into something that looks like a neural
 network, is very simple, but exhibits a different sort of complexity
-than our simple neuron.
+than our simple neuron.  (This is mostly of historical interest, to
+understand the evolution of the field.)
 
-Perceptron is a supervised algorithm.  Given inputs $D = \{(x_j, d_j)\}$, want classifier $f$.
+Perceptron is a supervised algorithm.  Given inputs
+$D = \{(x_j, d_j)\}$, want classifier $f$.
 
 We'll call $x_{j,i} = x^{(j)}_i$ the value of feature $i$ in training datum $j$.
 We set $x_{j,0}\equiv 1$.  This way we don't have to think about bias.
@@ -111,92 +214,16 @@ A perceptron with two inputs looks like this:
 (where $T$ is a threshold).  So this is a line.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\notetitle{Example: XOR is not linearly separable}
 \bigskip
+\textbf{Note:}
 
-\begin{proof}
+It turns out that the perceptron algorithm is unstable and prone to
+many problems on deep or non-linear networks.
 
-  If XOR is linearly separable, a perceptron can separate it.
-  We will construct a two input, one output perceptron to compute XOR.
-  We will show that this leads to a contradiction, and so our
-  assumption that XOR is not linearly separable must be false.
-
-  Our perceptron's inputs are $x_1$ and $x_2$ and have associated
-  weights $w_1$ and $w_2$ respectively.  Then we have $y=w\cdot x + b$
-  and the output of the perceptron is
-  \begin{displaymath}
-    z = \begin{cases}
-      1 & \mbox{if } y = w\cdot x + b > 0, \\
-      0 & \mbox{otherwise}
-    \end{cases}
-  \end{displaymath}
-
-  Our training data is $D=\{ (0, 0), (0, 1), (1, 0), (1, 1) \}$ and the
-  desired output values are $d=\{0, 1, 1, 0\}$.
-
-  Because I am lazy, I'd rather not learn the bias independently, so
-  let $x_3\equiv 1$ and when we set $w_1$ and $w_2$ to random values
-  in $[0,1]$ to initialise learning, we also set $w_3$ to a similar
-  random value.  (We use random values because numerical analysts tell
-  us that this provides better numerical stability.)
-
-  If we now agree that our vectors are now three-dimensional without
-  changing their names, the perceptron's output may be written
-  \begin{equation}
-    \label{z}
-    z = \begin{cases}
-      1 & \mbox{if } y = w\cdot x > 0, \\
-      0 & \mbox{otherwise}
-    \end{cases}
-  \end{equation}
-  We must now write $D=\{ (0, 0, 1), (0, 1, 1), (1, 0, 1), (1, 1, 1) \}$ .
-
-  Suppose that XOR is linearly separable.  Then when we learn the
-  final weights for our perceptron, we will have succeeded in
-  separating the elements of $D$ according to the values of $d$.  Then
-  we may write the four training cases of our simple perceptron (one
-  line for each element of $D$ and $d$ respectively) thus:
-  \begin{align*}
-    z((0,0,1)) & = 0 \\
-    z((0,1,1)) & = 1 \\
-    z((1,0,1)) & = 1 \\
-    z((1,1,1)) & = 0
-  \end{align*}
-  In other words, using (\ref{z}), we can express the same system in
-  terms of $w_1x_1 + w_2x_2 + w_3x_3$, and so we have
-  \begin{align*}
-    w_10 + w_20 + w_31 & \le 0 \\
-    w_10 + w_21 + w_31  & > 0 \\
-    w_11 + w_20 + w_31  & > 0 \\
-    w_11 + w_21 + w_31  & \le 0
-  \end{align*}
-  Dropping the zero terms and remembering the multiplicative identity,
-  this yields
-  \begin{align}
-    \label{contr1}
-    w_3 & \le 0 \\
-    \label{contr2}
-    w_2 + w_3  & > 0 \\
-    \label{contr3}
-    w_1 + w_3   & > 0 \\
-    \label{contr4}
-    w_1 + w_2  + w_3 & \le 0
-\end{align}
-
-Summing (\ref{contr2}) and (\ref{contr3}), we see that
-$(w_1+w_2+w_3) + w_3 > 0$.  Since $w_3\le 0$ by (\ref{contr1}),
-$-w_3\ge 0$, and so we have
-\begin{displaymath}
-  (w_1+w_2+w_3) > -w_3 \ge 0
-\end{displaymath}
-We see then that (\ref{contr4}) yields a contradiction, and so XOR is
-not linearly separable.
-
-\end{proof}
 
 \bigskip
+\textbf{Note:}
+
 We also call the separating plane (hyperplane) a decision boundary. \\
 The function we also call a discriminant or decision function.\\
 At the boundary, the decision function is zero.
@@ -210,32 +237,59 @@ Recall geometry: decision boundary is perpendicular to weight vector.
 \end{proof}
 
 
-\exercise{Compute the weights for a perceptron that computes logical
-  AND.  If it doesn't feel easy, compute logical OR as well.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Next Steps}
 
-\exercise{In python, implement (from scratch) a perceptron algorithm
-  with (at least) two inputs.  It should accept as input a matrix of
-  training data (numpy \texttt{ndarray} is your friend) and an array
-  of supervision classes.  Separately, use it to classify a simple
-  logic function.  Push to your own git repo for the course.}
+Idea: maybe add some layers in the middle.
+
+What would we put there?
+
+Maybe choose not to care, call them ``hidden layers''.
+
+Neuron activity at each layer must be a non-linear function of
+previous layer
+
+\red{If more than two hidden layers, then we call it deep}
+
+\blue{How do we train such a thing?  We'll see that in more detail next week.}
+
+\bigskip
+\textbf{Activation function:} How the neuron decides when to fire.
+
+\bigskip
+\textbf{Things we do in the middle.}
+\begin{itemize}
+\item sigmoid neurons
+\item ReLU neurons
+\item ReLU + softmax neurons
+\item Pooling, e.g. max (a form of down sampling)
+\item Dropout
+\end{itemize}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Perceptron and MNIST}
 
-What other classifiers do we know?
-\begin{itemize}
-\item How would we do this with logistic regression?
-\item How would we do this with CARTs ?
-\end{itemize}
+MNIST is the ``hello world'' of ML.
 
-Talk about OvO, OvA.
-
-This just introduces voting\dots
+Talk about OvO, OvA.  Introduce voting.
 
 Note that many problems admit multiple solutions.  The perceptron will
 pick one, but not necessarily the best.  The ``perceptron of optimum
 stability'' (SVM) was designed to solve this problem.
 
+ANNs don't necessarily find the best solution.
+
+\textbf{Multilayer Perceptron (MLP)}
+\begin{itemize}
+\item Not perceptron
+\item Multiple layers
+\item First layer is linear
+\item Later layers use non-linear activation functions (typically sigmoid)
+\item Feedforward
+\item Can find non-linear separators
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \notetitle{Training a single neuron}
