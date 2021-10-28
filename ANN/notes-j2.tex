@@ -1,0 +1,210 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Too simple example: perceptron}
+
+Let's take a quick detour into something that looks like a neural
+network, is very simple, but exhibits a different sort of complexity
+than our simple neuron.  (This is mostly of historical interest, to
+understand the evolution of the field.)
+
+Perceptron is a supervised algorithm.  Given inputs
+$D = \{(x_j, d_j)\}$, want classifier $f$.
+
+We'll call $x_{j,i} = x^{(j)}_i$ the value of feature $i$ in training datum $j$.
+We set $x_{j,0}\equiv 1$.  This way we don't have to think about bias.
+
+\textbf{Perceptron algorithm:}
+\begin{displaymath}
+  \mbox{At each output, }
+  f(x; w, b) = \left\{
+    \begin{array}{ll}
+      1 & \mbox{if } w\cdot x + b > 0 \\
+      0 & \mbox{otherwise}
+    \end{array}
+ \right.
+\end{displaymath}
+\begin{itemize}
+\item Initialise weights randomly.
+\item $\forall x_j\in \mbox{inputs}$, compute output: $y_j(t) = f(w(t)\cdot x_j)$
+\item Update weights
+\end{itemize}
+
+A bit more detail on weight update:
+
+\fbox{v1}
+\begin{displaymath}
+w(t+1) = \left\{
+\begin{array}{ll}
+  w(t) - r(t) & \mbox{ if false positive} \\
+  w(t) & \mbox{ if no error} \\
+  w(t) + r(t) & \mbox{ if fail to recognise} \\
+\end{array} \right.
+\end{displaymath}
+
+\fbox{v2} ($d=$ desired, $y=$ observed) :
+\begin{displaymath}
+  d(t) - y(t) = \left\{
+\begin{array}{ll}
+  -1 & \mbox{ if  false positive} \\
+  0 & \mbox{ if no error} \\
+  1 & \mbox{ if fail to recognise} \\
+\end{array} \right.
+\end{displaymath}
+
+\fbox{v3} $w_i(t+1) = w_i(t) + r(t)\cdot (d_j - y_j(t)) x_{j,i}$ for all features $i$
+
+The weight are updated at the last step after each training sample.
+
+Converges if separable.\\
+Note we don't need a learning rate.
+
+A perceptron with two inputs looks like this:
+\begin{displaymath}
+  w_1 x_1 + w_2 x_2 = T
+\end{displaymath}
+(where $T$ is a threshold).  So this is a line.
+
+
+\bigskip
+\textbf{Note:}
+
+It turns out that the perceptron algorithm is unstable and prone to
+many problems on deep or non-linear networks.
+
+
+\bigskip
+\textbf{Note:}
+
+We also call the separating plane (hyperplane) a decision boundary. \\
+The function we also call a discriminant or decision function.\\
+At the boundary, the decision function is zero.
+
+Recall geometry: decision boundary is perpendicular to weight vector.
+
+\begin{proof}
+  Consider $x_1$ and $x_2$ on the decision boundary.  Then
+  $f(x_1; w, b) = 0$ and $f(x_2; w, b) = 0$.  So
+  $w\cdot (x_1 - x_2) = 0$.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Next Steps}
+
+Idea: maybe add some layers in the middle.
+
+What would we put there?
+
+Maybe choose not to care, call them ``hidden layers''.
+
+Neuron activity at each layer must be a non-linear function of
+previous layer
+
+\red{If more than two hidden layers, then we call it deep}
+
+\blue{How do we train such a thing?  We'll see that in more detail next week.}
+
+\bigskip
+\textbf{Activation function:} How the neuron decides when to fire.
+
+\bigskip
+\textbf{Things we do in the middle.}
+\begin{itemize}
+\item sigmoid neurons
+\item ReLU neurons
+\item ReLU + softmax neurons
+\item Pooling, e.g. max (a form of down sampling)
+\item Dropout
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Perceptron and MNIST}
+
+MNIST is the ``hello world'' of ML.
+
+Talk about OvO, OvA.  Introduce voting.
+
+Note that many problems admit multiple solutions.  The perceptron will
+pick one, but not necessarily the best.  The ``perceptron of optimum
+stability'' (SVM) was designed to solve this problem.
+
+ANNs don't necessarily find the best solution.
+
+\textbf{Multilayer Perceptron (MLP)}
+\begin{itemize}
+\item Not perceptron
+\item Multiple layers
+\item First layer is linear
+\item Later layers use non-linear activation functions (typically sigmoid)
+\item Feedforward
+\item Can find non-linear separators
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\notetitle{Training a single neuron}
+
+\medskip
+\input{neuron.pdf_t}
+\medskip
+
+Let's start with a performance function $P=\| d-z \|$.  \\
+Why don't we like that?
+% Because it's not smooth, the mathematics isn't nice.
+
+So instead use $P=\| d-z \|^2 = (d-z)^2$.
+
+\textit{(Draw $w_1$-$w_2$ plot with isoclines.  Show four candidate
+  steps.  Mention 60 million parameters in Hinton's model.  Talk about
+  exponential explosion with number of weights.)}
+
+So we can follow the gradient:
+\begin{displaymath}
+  \frac{\partial P}{w_1} \quad , \quad   \frac{\partial P}{w_2}
+\end{displaymath}
+
+\begin{displaymath}
+  \Delta w = r\left( \frac{\partial P}{w_1} \mathbf{i} +
+    \frac{\partial P}{w_2} \mathbf{j} \right)
+\end{displaymath}
+
+What goes wrong?\\
+
+\textit{Computer scientists were stuck on this for a quarter century.
+Then Paul Werbos showed in his 1974 PhD dissertation how to train
+neural networks using back-propagation of errors.}
+
+\textbf{Two problems:}
+
+\textbf{\large 1. } Thresholds are annoying.  We don't want $z = f(x, w, T)$
+but $z=f(x, w)$.
+
+So let's add an extra weight $w_0$ and input $x_0=-1$.  Then set $w_0\equiv T$.
+
+\textit{(Show that this moves the threshold step to 0.  So we don't
+  have to pay attention to it anymore.)}
+
+\textbf{\large 2. } We're using a step function, which isn't continuous.
+
+Let's smooth it out.  Use sigmoid function.
+\begin{displaymath}
+  \beta = \frac{1}{1+e^{-\alpha}}
+\end{displaymath}
+
+\textit{(Walk through how to graph this.)}
+
+\textbf{Summary: } What have we done ?
+\begin{itemize}
+\item Built a neuron
+\item Described how to do gradient descent
+\item Modified our activation function to be compatible with gradient descent
+\end{itemize}
+
+
+\end{document}

@@ -1,0 +1,151 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+
+\begin{document}
+
+Let's look at the problem of recognising hand-written digits. \\
+Good toy problem: practical, hard, simple. \\
+It will take us the whole lecture to do a first draft on how to solve
+this problem.
+
+Humans can do it, so maybe think about how we might do it.
+
+
+\notetitle{Neural Networks}
+
+ANN
+\begin{itemize}
+\item Long a curiosity
+\item 2012 paper, Hinton, image classification, 1000 categories, 60 million parameters
+\item neurones : axone, terminaison de l'axone, noyau, dendrites; activation energy
+\end{itemize}
+
+\purple{\fbox{Show a neuron with dendrites, explain how it works.}}
+
+\input{neuron.pdf_t}
+
+\bigskip
+
+What are we modeling?
+\begin{enumerate}
+\item all or none
+\item cumulative influence
+\item synaptic weight
+\item (not) refractory period \textit{(période réfractaire)}
+\item (not) axonal bifurcation
+\item (not) time patterns
+\end{enumerate}
+
+So we have a model of a neuron (a collection of weights and thresholds).\\
+But what about collections of neurons?
+
+\begin{displaymath}
+  \mbox{inputs} \rightarrow (w, t) \rightarrow \mbox{outputs}
+\end{displaymath}
+
+So we want $z = f(x, w, t)$.  Training means adjusting $w, t$.\\
+An ANN is a function approximator.
+
+We want some desired function, $d = g(x)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Types of neurons}
+
+\bigskip
+\textbf{Linear neuron}
+\begin{displaymath}
+  y = b + \sum_i x_i w_i
+\end{displaymath}
+where
+\begin{align*}
+  y & = \text{output} \\
+  b & = \text{bias} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Binary threshold neuron}
+\begin{align*}
+  z & = \sum_i x_i w_i \\[2mm]
+  y & = \left\{
+      \begin{array}{l}
+        1  \text{ if } z \ge 0 \\
+        0  \text{ otherwise}        
+      \end{array}
+  \right.
+\end{align*}
+where
+\begin{align*}
+  z & = \text{total input} \\
+  y & = \text{output} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Rectified linear neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  y & = \left\{
+      \begin{array}{l}
+        z  \text{ if } z \ge 0 \\
+        0  \text{ otherwise}        
+      \end{array}
+  \right.
+\end{align*}
+where
+\begin{align*}
+  z & = \text{total input} \\
+  y & = \text{output} \\
+  b & = \text{bias} \\
+  x_i & = \text{$i^\mathrm{\,th}$ input} \\
+  w_i & = \text{weight on $i^\mathrm{\,th}$ input}
+\end{align*}
+
+
+\bigskip
+\textbf{Sigmoid neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  y & = \frac{1}{1+e^{-z}}
+\end{align*}
+\textit{(This is differentiable.)}
+
+
+\bigskip
+\textbf{Stochastic binary neuron}
+\begin{align*}
+  z & = b + \sum_i x_i w_i \\[2mm]
+  p &= \frac{1}{1+e^{-z}} \\[3mm]
+  y & = \left\{
+      \begin{array}{l}
+        1  \text{ with probability } p \\[2mm]
+        0  \text{ with probability } 1 - p
+      \end{array}
+  \right.
+\end{align*}
+\textit{(a probability distribution)}
+
+\blue{\it Can also do something similar with rectified linear
+  neurons, produce spikes with probability $p$ with a Poisson
+  distribution.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Neural Networks}
+
+\textbf{Architecture} is how we connect the states.
+
+\textbf{Feed forward network}
+\begin{itemize}
+\item Flow is unidirectional
+\item No loops
+\end{itemize}
+
+
+\end{document}
