@@ -1,0 +1,134 @@
+\input ../notes-header.tex
+\usepackage{epsfig}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Rules of Machine Learning}
+
+(source: Martin Zinkevich, Google)
+
+\notesection{Some terms}
+
+\begin{itemize}
+\item \textbf{Instance}: The thing about which you want to make a
+  prediction. For example, the instance might be a web page that you
+  want to classify as either "about cats" or "not about cats".
+\item \textbf{Label}: An answer for a prediction task ­­ either the
+  answer produced by a machine learning system, or the right answer
+  supplied in training data. For example, the label for a web page
+  might be "about cats".
+\item \textbf{Feature}: A property of an instance used in a prediction
+  task. For example, a web page might have a feature "contains the
+  word 'cat'".
+\item \textbf{Feature Column:} A set of related features, such as the
+  set of all possible countries in which users might live. An example
+  may have one or more features present in a feature column. "Feature
+  column" is Google-specific terminology. A feature column is referred
+  to as a "namespace" in the VW system (at Yahoo/Microsoft), or a
+  field.
+\item \textbf{Example:} An instance (with its features) and a label.
+\item \textbf{Model:} A statistical representation of a prediction
+  task. You train a model on examples then use the model to make
+  predictions.
+\item \textbf{Metric:} A number that you care about. May or may not be
+  directly optimized.
+\item \textbf{Objective:} A metric that your algorithm is trying to optimize.
+\item \textbf{Pipeline:} The infrastructure surrounding a machine
+  learning algorithm. Includes gathering the data from the front end,
+  putting it into training data files, training one or more models,
+  and exporting the models to production.
+\item \textbf{Click-through Rate:} The percentage of visitors to a web
+    page who click a link in an ad.
+\end{itemize}
+
+
+\notesection{Overview}
+
+\begin{itemize}
+\item Engineering is more important than ML.  If it's not reliable,
+  solid, and reproducible, the rest doesn't matter.
+\item Have reasonable objects
+\item Be as simple as possible
+\end{itemize}
+
+
+\notesection{Start without ML}
+
+\begin{itemize}
+\item ML needs data, you rarely start with lots of data
+\item Heuristics will often get you half way there
+\item Your first goal is just to be better than random.  So identify
+  what random looks like.
+\end{itemize}
+
+\notesection{Design and Implement Metrics}
+
+\begin{itemize}
+\item Start by measuring, otherwise you can't know how you're doing
+\item Measuring the first thing is the hardest
+\item People care less early, so less resistance
+\item Get historical data now.  When you start to care, you'll have a baseline.
+\end{itemize}
+
+\notesection{Prefer ML to complex heuristics}
+
+\begin{itemize}
+\item It's more maintainable
+\item But have you tried simple heuristics?
+\end{itemize}
+
+\notesection{Start with simple models and get infrastructure right}
+
+\begin{itemize}
+\item If your pipeline is shoddy, it will be hard to do anything
+  anyway
+\item The first model provides the biggest delta
+\item This is ``hello world'' territory, focus on the basics
+  \begin{itemize}
+  \item getting data
+  \item representing data
+  \item identifying good vs bad
+  \item how to integrate model into application
+  \end{itemize}
+\item Simple features are easier to understand, debug
+\item Make sure you understand your data
+\end{itemize}
+
+\notesection{Test infrastructure separately from ML}
+
+\begin{itemize}
+\item Make sure the infra is testable
+\item Make sure the ML is encapsulated
+\item Test getting data into the system
+\item Test that features are populated correctly
+\item Inspect the data (if allowed)
+\item Compare statistics from your pipeline with other sources (if
+  exist)
+\item Test moving models from training to production
+\item Make sure you understand your data
+\end{itemize}
+
+\notesection{Heuristics become features}
+
+\begin{itemize}
+\item Often some system already exists.  It uses heuristics, produces
+  features.  Take advantage of that.
+\item Consider using the existing system as a sort of pre-processor,
+  generating synthetic features.
+\end{itemize}
+
+\notesection{Monitoring and alerting are important}
+
+\begin{itemize}
+\item Understand your freshness requirements
+\item Do sanity checks at model export time, at deploy time
+\item Understand what requires an email, what requires a page, what
+  just has to be available for inspection
+\item Be aware of silent failures (e.g., data source decay)
+\item Make sure features have owners and that it's documented who they
+  are (and that the features are documented).  Same for algorithms.
+\end{itemize}
+
+\end{document}
