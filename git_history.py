@@ -44,13 +44,16 @@ def main():
     git clone https://github.com/lcorven/PROJET_M2_EKAP_CHIFFOLEAU_CORVEN QC+LC
 
     """
-    repo_names = ['AA+SB', 'AM+VF', 'AV+BL', 'GS+TB', 'JBD+KR', 'LLM+AP',
-                  'LV+CM', 'MK+AS', 'QC+LC', 'SM+LM']
+    repo_names = ['amaury-maillard_vincent-fattorelli', 'andre-angwe_sory-barry',
+                  'astrid-valicon_gabin-lagre', 'gwendal-suau_thibault-bregal',
+                  'jean-baptiste-delchateau_kyllien-romand', 'luc-le-mée_antoine-petiteau',
+                  'lucie-vrignaud_cécile-mocher', 'mohamed-kouyate_achille-siabi',
+                  'quentin-chiffoleau_loïc-corven', 'sara-meziani_louis-mortreuil', ]
     time_series = []
     for repo_name in repo_names:
         time_series.append(repo_get_commits(repo_name))
-    min_timestamp = min([min(series) for series in time_series])
-    max_timestamp = max([max(series) for series in time_series])
+    min_timestamp = min([min(series) for series in time_series if len(series) > 0])
+    max_timestamp = max([max(series) for series in time_series if len(series) > 0])
     # Use two more than the days available to deal with times a bit
     # before or after first and last day.
     days_in_universe = (max_timestamp - min_timestamp).days + 2
