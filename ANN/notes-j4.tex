@@ -5,6 +5,15 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\notetitle{Notes from last week}
+
+\notesection{OvO, OvA}
+
+\notesection{Minibatch vs Stochastic descent}
+
+\notesection{?}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Rules of Machine Learning}
 
 (source: Martin Zinkevich, Google)
@@ -129,6 +138,26 @@
 \item Be aware of silent failures (e.g., data source decay)
 \item Make sure features have owners and that it's documented who they
   are (and that the features are documented).  Same for algorithms.
+\end{itemize}
+
+\notesection{Objectives (objective function)}
+
+\begin{itemize}
+\item Start simple: at first, many things are correlated
+\item Start simple: observable and easily measurable
+\item Avoid (at first) indirect effects (next/previous day,
+  correlations between features)
+\item Don't try to use ML to measure user internal state (happiness,
+  satisfaction)
+\end{itemize}
+
+\notesection{Interpretable models are easier to debug}
+
+\begin{itemize}
+\item Linear, logistic, and poisson regression are directly motivated
+  by probabilistic models, so easier to reason about
+\item Models with objectives based on 0-1 loss, hinge loss, etc. are
+  harder to reason about
 \end{itemize}
 
 \end{document}
