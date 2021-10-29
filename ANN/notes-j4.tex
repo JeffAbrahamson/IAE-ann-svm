@@ -160,4 +160,84 @@
   harder to reason about
 \end{itemize}
 
+\notesection{From phase 1 to phase 2}
+
+\begin{itemize}
+\item Phase 1 is getting a working end-to-end system
+  \begin{itemize}
+  \item training data
+  \item metrics
+  \item infrastructure, pipeline
+  \item unit and system tests
+  \end{itemize}
+\item Phase 2 is feature engineering
+  \begin{itemize}
+  \item adding and inventing new features
+  \item metrics mostly all rising
+  \end{itemize}
+\end{itemize}
+
+\notesection{Launch (and iterate)}
+
+\begin{itemize}
+\item Expect that your first model is not your last: avoid complexity
+  that will slow you down later
+\item Think about how easy it is to add or remove features
+\item Think about how to run multiple copies in parallel
+\item Don't sweat the small stuff, you'll do it next iteration (next quarter)
+\end{itemize}
+
+\notesection{Start with observed features}
+
+\begin{itemize}
+\item That is, don't start with learned features
+  \begin{itemize}
+  \item features from other systems (different objectives, maybe stale)
+  \item features you learn yourself (e.g., clustering)
+  \end{itemize}
+\item Many algorithms are non-convex, so taking their features might
+  kill your convergence (different local minima on different runs)
+\item Harder to judge impact of changes
+\item So shoot first for good baseline
+\end{itemize}
+
+\notesection{Simple feature engineering}
+
+\begin{itemize}
+\item Consider fixed intervals (e.g., MLP) rather than variable (e.g.,
+  LSTM)
+\item Consider discretisation (e.g., age bands), don't worry too much
+  about getting the banding right
+\item Crosses are useful, but can generate too much data, can
+  overfit.  E.g., word in query, word in document
+\item You can (roughly) learn as many weights as you have data
+\item Clean up features you are no longer using, they are technical debt
+\end{itemize}
+
+\notesection{Human analysis of the system}
+
+\begin{itemize}
+\item This is more art than science, but it's important!
+\item You are not a typical end user
+  \begin{itemize}
+  \item You are too close to the code and to the problem
+  \item Confirmation bias
+  \end{itemize}
+\item Get (even pay) other people to test, they cost less than
+  engineers
+\item Think about team bias: are you all white, all male, etc.
+\item Watch real people use the system, don't correct them, they're
+  right, whatever they do
+\end{itemize}
+
+\notesection{Comparing models}
+
+\begin{itemize}
+\item Know how to measure delta between models (e.g., what you're
+  working on and production)
+\item Make sure that comparing a model with itself says small delta
+\item Remember that, ultimately, you're optimising a business problem,
+  not log loss
+\end{itemize}
+
 \end{document}
