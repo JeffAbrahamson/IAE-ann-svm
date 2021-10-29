@@ -9,9 +9,59 @@
 
 \notesection{OvO, OvA}
 
+OvO : vote
+
+\begin{quote}
+  More to compute than OvA.  Still a heuristic.
+\end{quote}
+
+OvA : choose classifier with highest score
+
+\begin{quote}
+  This heuristic presents several problems.  The classifiers are not
+  necessarily comparable.  Also, the binary classifiers see unbalanced
+  class ratios (more negatives than positives).
+\end{quote}
+
 \notesection{Minibatch vs Stochastic descent}
 
-\notesection{?}
+\begin{itemize}
+\item \textbf{SGD.} Update for each sample in the training set
+  (repeatedly).
+  \begin{itemize}
+  \item Often called online
+  \item Frequent updates mean quick insight on progress
+  \item Sometimes faster learning
+  \item Noisy, which can help avoid local minima
+  \item \textbf{But\dots} lots of updates
+  \item Noisy (cf above)
+  \item Sometimes slower
+  \end{itemize}
+\item \textbf{Batch Gradient Descent.} Train on all samples (one
+  epoch), then update.
+  \begin{itemize}
+  \item Fewer updates, sometimes more efficient
+  \item Not so noisy
+  \item More easily parallelisable
+  \item \textbf{But\dots} stability sometimes means premature
+    convergence
+  \item Updates are more costly (but have to do them anyway)
+  \item Sometimes slow
+  \end{itemize}
+\item \textbf{Mini-Batch Gradient Descent.} Like batch, but smaller
+  epochs (train on a subset each time)
+  \begin{itemize}
+  \item Goldilocks version
+  \item Probably the most common case
+  \end{itemize}
+\item \textbf{Coordinate Gradient Descent.} Choose one coordinate at a
+  time.  Less common.
+\end{itemize}
+
+\notesection{Continuous vs discrete}
+
+Make a continuous problem discrete with a threshold.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \notetitle{Rules of Machine Learning}
